@@ -11,6 +11,7 @@ namespace CentroCostos.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using CentroCostos.Infrastructure;
+    using CentroCostos.Helpers;
 
     public static class NinjectWebCommon 
     {

@@ -122,9 +122,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CsvActionResult.cs" />
+    <Compile Include="Helpers\ExcelDataExport.cs" />
+    <Compile Include="Helpers\IExcelDataExport.cs" />
     <Compile Include="Infrastructure\ApplicationContext.cs" />
-    <Compile Include="Infrastructure\ExcelData.cs" />
-    <Compile Include="Infrastructure\IExcelData.cs" />
+    <Compile Include="Helpers\ExcelData.cs" />
+    <Compile Include="Helpers\IExcelData.cs" />
     <Compile Include="Models\CentroCosto.cs" />
     <Compile Include="Models\Costo.cs" />
     <Compile Include="Models\Departamento.cs" />
@@ -138,6 +141,7 @@
     <Content Include="packages.config" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>

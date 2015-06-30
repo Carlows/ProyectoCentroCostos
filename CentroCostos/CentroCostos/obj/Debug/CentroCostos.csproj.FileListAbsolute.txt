@@ -30,6 +30,6 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\System.Web.WebPages.xml
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\System.Web.WebPages.Razor.xml
-C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.csprojResolveAssemblyReference.cache
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.dll
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.pdb
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.csprojResolveAssemblyReference.cache
