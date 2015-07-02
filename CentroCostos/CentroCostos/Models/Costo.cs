@@ -10,5 +10,15 @@ namespace CentroCostos.Models
     // los indirectos serian como reparacion, depreciacion de la maquinaria, etc.
     public class Costo
     {
+        public int Id { get; set; }
+
+        public bool esCostoDirecto { get; set; }
+        public string Descripcion { get; set; }
+        public string Comentario { get; set; }
+
+        public decimal Valor { get; set; }
+
+        // Solo se asignará si este costo es directo
+        public virtual Material Material_Directo { get; set; }
     }
 }

@@ -9,5 +9,10 @@ namespace CentroCostos.Models
     // (de produccion como corte, montura, etc. o de ventas o administracion)
     public class Departamento
     {
+        public int Id { get; set; }
+
+        public string Nombre_Departamento { get; set; }
+
+        public virtual IEnumerable<Costo> Costos_Departamento { get; set; }
     }
 }
