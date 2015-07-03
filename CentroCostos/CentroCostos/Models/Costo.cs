@@ -15,9 +15,7 @@ namespace CentroCostos.Models
         public bool esCostoDirecto { get; set; }
         public string Descripcion { get; set; }
         public string Comentario { get; set; }
-
-        public decimal Valor { get; set; }
-
+        
         // Solo se asignará si este costo es directo
         public virtual Material Material_Directo { get; set; }
     }
