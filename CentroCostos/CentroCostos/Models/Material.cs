@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace CentroCostos.Models
 {
     // Representa un material o un insumo
-    public class Material
+    [Table("Material")]
+    public partial class Material
     {
         public int Id { get; set; }
 
@@ -25,16 +27,5 @@ namespace CentroCostos.Models
 
         [Required]
         public virtual Costo Costo { get; set; }
-    }
-
-    public partial class Material
-    {
-        public decimal Costo_Total
-        {
-            get
-            {
-                return this.Costo_Unitario * this.Costo_Total;
-            }
-        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,7 @@ namespace CentroCostos.Models
 {
     // Representa un modelo de zapato
     // cada ficha tecnica representa un modelo, asi que la ficha tecnica se representara con esta entidad
+    [Table("Modelo")]
     public class Modelo
     {
         public int Id { get; set; }

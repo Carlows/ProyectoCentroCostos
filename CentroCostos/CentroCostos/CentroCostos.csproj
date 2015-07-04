@@ -128,12 +128,27 @@
     <Compile Include="Infrastructure\ApplicationContext.cs" />
     <Compile Include="Helpers\ExcelData.cs" />
     <Compile Include="Helpers\IExcelData.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\Repositorios\BaseRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\ILineaRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\IModeloRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\LineaRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\ModeloRepository.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Migrations\201507042112249_InitialMigration.cs" />
+    <Compile Include="Migrations\201507042112249_InitialMigration.Designer.cs">
+      <DependentUpon>201507042112249_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CentroCosto.cs" />
     <Compile Include="Models\Costo.cs" />
     <Compile Include="Models\Departamento.cs" />
     <Compile Include="Models\Linea.cs" />
     <Compile Include="Models\Material.cs" />
+    <Compile Include="Models\MaterialExtension.cs" />
     <Compile Include="Models\Modelo.cs" />
+    <Compile Include="Models\Orden.cs" />
+    <Compile Include="Models\UnidadCosto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +171,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201507042112249_InitialMigration.resx">
+      <DependentUpon>201507042112249_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
