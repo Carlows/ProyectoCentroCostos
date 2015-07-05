@@ -19,6 +19,7 @@ namespace CentroCostos.Models
         public string Comentario { get; set; }
         
         // Solo se asignará si este costo es directo
+        public virtual Departamento Departamento { get; set; }
         public virtual Material Material_Directo { get; set; }
     }
 }

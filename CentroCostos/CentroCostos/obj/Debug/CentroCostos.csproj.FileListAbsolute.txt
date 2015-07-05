@@ -35,3 +35,4 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.csprojResolveAssemblyReference.cache
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.InitialMigration.resources
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.csproj.GenerateResource.Cache
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.SecondMigration.resources

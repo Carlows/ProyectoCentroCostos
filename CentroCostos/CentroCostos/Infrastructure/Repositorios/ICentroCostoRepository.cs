@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CentroCostos.Infrastructure.Repositorios
 {
-    public interface IModeloRepository
+    public interface ICentroCostoRepository
     {
-        Modelo Find(string codigo);
+        CentroCosto Find(string codigo);
     }
 }

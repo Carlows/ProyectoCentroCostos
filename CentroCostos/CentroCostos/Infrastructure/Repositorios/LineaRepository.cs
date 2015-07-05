@@ -16,10 +16,5 @@ namespace CentroCostos.Infrastructure.Repositorios
         {
             return DbContext.Lineas.Where(l => l.Nombre_Linea.StartsWith(linea)).Single();
         }
-
-        public IEnumerable<Modelo> GetModelos(int id)
-        {
-            return DbContext.Lineas.Find(id).Modelos_Linea;
-        }
     }
 }

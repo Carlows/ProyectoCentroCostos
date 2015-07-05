@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CentroCostos.Infrastructure.Repositorios
 {
-    interface ILineaRepository
+    public interface ILineaRepository
     {
         Linea Find(string linea);
-        IEnumerable<Modelo> GetModelos(int linea);
     }
 }

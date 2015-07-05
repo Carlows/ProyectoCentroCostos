@@ -52,7 +52,7 @@ namespace CentroCostos.Infrastructure.Repositorios
             DbContext.Set<TEntity>().Attach(entity);
             DbContext.Entry(entity).State = EntityState.Modified;
         }
-
+        
         public IEnumerable<TEntity> FindAll()
         {
             return DbContext.Set<TEntity>().ToList();

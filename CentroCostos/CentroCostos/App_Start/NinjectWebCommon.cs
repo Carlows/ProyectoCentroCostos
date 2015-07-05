@@ -70,6 +70,11 @@ namespace CentroCostos.App_Start
             kernel.Bind<IExcelDataExport>().To<ExcelDataExport>();
             kernel.Bind<ILineaRepository>().To<LineaRepository>();
             kernel.Bind<IModeloRepository>().To<ModeloRepository>();
+            kernel.Bind<ICentroCostoRepository>().To<CentroCostoRepository>();
+            kernel.Bind<IDepartamentoRepository>().To<DepartamentoRepository>();
+            kernel.Bind<IOrdenRepository>().To<OrdenRepository>();
+            kernel.Bind<IUnidadCostoRepository>().To<UnidadCostoRepository>();
+            kernel.Bind<IMaterialRepository>().To<MaterialRepository>();
         }        
     }
 }

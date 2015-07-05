@@ -130,14 +130,28 @@
     <Compile Include="Helpers\IExcelData.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\Repositorios\BaseRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\CentroCostoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\DepartamentoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\ICentroCostoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\IDepartamentoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ILineaRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\IMaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IModeloRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\IOrdenRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\IUnidadCostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\LineaRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\MaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ModeloRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\OrdenRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\UnidadCostoRepository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Migrations\201507042112249_InitialMigration.cs" />
     <Compile Include="Migrations\201507042112249_InitialMigration.Designer.cs">
       <DependentUpon>201507042112249_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507050112161_SecondMigration.cs" />
+    <Compile Include="Migrations\201507050112161_SecondMigration.Designer.cs">
+      <DependentUpon>201507050112161_SecondMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CentroCosto.cs" />
@@ -158,6 +172,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -175,6 +190,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507042112249_InitialMigration.resx">
       <DependentUpon>201507042112249_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507050112161_SecondMigration.resx">
+      <DependentUpon>201507050112161_SecondMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
