@@ -113,18 +113,57 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\base-admin-responsive.css" />
+    <Content Include="Content\css\bootstrap-responsive.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\font-awesome-ie7.css" />
+    <Content Include="Content\css\font-awesome-ie7.min.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\pages\dashboard.css" />
+    <Content Include="Content\css\pages\faq.css" />
+    <Content Include="Content\css\pages\plans.css" />
+    <Content Include="Content\css\pages\reports.css" />
+    <Content Include="Content\css\pages\signin.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\fontgoogleapi.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\js\base.js" />
+    <Content Include="Scripts\js\bootstrap.js" />
+    <Content Include="Scripts\js\chart.min.js" />
+    <Content Include="Scripts\js\charts\area.js" />
+    <Content Include="Scripts\js\charts\bar.js" />
+    <Content Include="Scripts\js\charts\donut.js" />
+    <Content Include="Scripts\js\charts\line.js" />
+    <Content Include="Scripts\js\charts\pie.js" />
+    <Content Include="Scripts\js\excanvas.min.js" />
+    <Content Include="Scripts\js\faq.js" />
+    <Content Include="Scripts\js\full-calendar\fullcalendar.css" />
+    <Content Include="Scripts\js\full-calendar\fullcalendar.min.js" />
+    <Content Include="Scripts\js\guidely\guidely-number.png" />
+    <Content Include="Scripts\js\guidely\guidely.css" />
+    <Content Include="Scripts\js\guidely\guidely.min.js" />
+    <Content Include="Scripts\js\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\js\signin.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdministracionController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LineaProduccionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CsvActionResult.cs" />
     <Compile Include="Helpers\ExcelDataExport.cs" />
     <Compile Include="Helpers\IExcelDataExport.cs" />
+    <Compile Include="Helpers\ViewHelpers.cs" />
     <Compile Include="Infrastructure\ApplicationContext.cs" />
     <Compile Include="Helpers\ExcelData.cs" />
     <Compile Include="Helpers\IExcelData.cs" />
@@ -138,6 +177,7 @@
     <Compile Include="Infrastructure\Repositorios\IMaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IModeloRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IOrdenRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\IRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IUnidadCostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\LineaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\MaterialRepository.cs" />
@@ -153,7 +193,12 @@
     <Compile Include="Migrations\201507050112161_SecondMigration.Designer.cs">
       <DependentUpon>201507050112161_SecondMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507061922272_ThirdMigration.cs" />
+    <Compile Include="Migrations\201507061922272_ThirdMigration.Designer.cs">
+      <DependentUpon>201507061922272_ThirdMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CategoriaMaterial.cs" />
     <Compile Include="Models\CentroCosto.cs" />
     <Compile Include="Models\Costo.cs" />
     <Compile Include="Models\Departamento.cs" />
@@ -163,6 +208,8 @@
     <Compile Include="Models\Modelo.cs" />
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\UnidadCosto.cs" />
+    <Compile Include="Models\ViewModels\LineasProduccionAdmViewModel.cs" />
+    <Compile Include="Models\ViewModels\NuevaLineaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,9 +220,30 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.svgz" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\font\fontawesome-webfont.eot" />
+    <Content Include="Content\font\fontawesome-webfont.svgz" />
+    <Content Include="Content\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\font\fontawesome-webfont.woff" />
+    <Content Include="Content\font\fontawesome-webfontd41d.eot" />
+    <Content Include="Content\font\FontAwesome.otf" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Administracion\Index.cshtml" />
+    <Content Include="Views\Administracion\LineasProduccion.cshtml" />
+    <Content Include="Views\Administracion\NuevaLinea.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -185,7 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Views\LineaProduccion\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507042112249_InitialMigration.resx">
@@ -193,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507050112161_SecondMigration.resx">
       <DependentUpon>201507050112161_SecondMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507061922272_ThirdMigration.resx">
+      <DependentUpon>201507061922272_ThirdMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

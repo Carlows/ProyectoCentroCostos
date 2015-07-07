@@ -15,6 +15,6 @@ namespace CentroCostos.Models
 
         public string Nombre_Linea { get; set; }
 
-        public virtual IEnumerable<Modelo> Modelos_Linea { get; set; }
+        public virtual IList<Modelo> Modelos_Linea { get; set; }
     }
 }

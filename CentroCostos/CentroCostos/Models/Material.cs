@@ -27,5 +27,7 @@ namespace CentroCostos.Models
 
         [Required]
         public virtual Costo Costo { get; set; }
+        [Required]
+        public virtual Material Categoria_Material { get; set; }
     }
 }
