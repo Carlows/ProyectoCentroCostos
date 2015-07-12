@@ -1,0 +1,92 @@
+﻿@model CentroCostos.Models.ViewModels.NuevoModeloViewModel
+
+<div class="span12">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Editar Modelo: <span class="text-danger">@Model.Codigo</span></h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @using (Html.BeginForm("EditarModelo", "Administracion", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true)
+
+                <fieldset>
+                    @Html.HiddenFor(x => x.id)
+                    @Html.HiddenFor(x => x.IdLinea)
+
+                    <div class="control-group">
+                        <label class="control-label">Codigo</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Codigo, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Horma</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Horma, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Planta</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Planta, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Tipo de suela</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Tipo_Suela, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Numeración</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Numeracion.Menor, new { @class = "span1" })
+                            @Html.TextBoxFor(t => t.Numeracion.Mayor, new { @class = "span1" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Pieza</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Pieza, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Color</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Color, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Imagen</label>
+
+                            <div class="controls">
+                                <input type="file" name="Imagen" class="span6" />
+                            </div> <!-- /controls -->                        
+                    </div>
+
+                    <div class="offset1">
+                        <img class="img-thumbnail" src="~/Content/@ViewBag.URLImagen" width="200" height="150" />
+                    </div>
+
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="@Url.Action("ModelosLinea", "Administracion", new { id = Model.IdLinea })" class="btn">Cancelar</a>
+                    </div>
+                </fieldset>
+            }
+        </div>
+        <!-- /widget-content -->
+    </div>
+</div>
+

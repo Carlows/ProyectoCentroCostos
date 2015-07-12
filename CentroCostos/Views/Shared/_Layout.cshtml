@@ -1,0 +1,80 @@
+﻿@using CentroCostos.Helpers
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cambiar titulo</title>
+
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="~/fonts/fontgoogleapi.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/css/pages/dashboard.css" rel="stylesheet" />
+    <link href="~/Content/css/customstyles.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </a><a class="brand" href="index.html">Sistema Centros de Costos</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="subnavbar">
+        <div class="subnavbar-inner">
+            <div class="container">
+                <ul class="mainnav">
+                    <li class="@Html.IsSelected(controller:"Administracion")"><a href="@Url.Action("Index", "Administracion")"><i class="icon-file"></i><span>Administración</span> </a></li>
+                    <li class="@Html.IsSelected(controller:"LineasProduccion")"><a href="#"><i class="icon-th"></i><span>Lineas de Producción</span> </a> </li>
+                    <li class=""><a href="#"><i class="icon-edit"></i><span>Centros de Costo</span> </a> </li>
+                    <li><a href="#"><i class="icon-list-alt"></i><span>Reportes</span> </a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+
+        <!--eliminar esto XD-->
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>    
+
+
+    <div class="footer">
+        <div class="footer-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="span12"> &copy; 2015 <a href="#">Centro de Innovación Tecnológica</a>. </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Scripts/js/bootstrap.js"></script>
+</body>
+</html>
