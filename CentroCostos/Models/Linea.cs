@@ -11,8 +11,6 @@ namespace CentroCostos.Models
     [Table("Linea")]
     public class Linea
     {
-
-
         public int Id { get; set; }
 
         public string Nombre_Linea { get; set; }

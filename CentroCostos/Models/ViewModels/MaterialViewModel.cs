@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CentroCostos.Models.ViewModels
 {
@@ -20,5 +21,8 @@ namespace CentroCostos.Models.ViewModels
         public decimal Costo_Unitario { get; set; }
         [Required(ErrorMessage = "El campo consumo por par es requerido")]
         public decimal Consumo_Par { get; set; }
+
+        public int CategoriaId { get; set; }
+        public IEnumerable<SelectListItem> Categorias { get; set; }
     }
 }

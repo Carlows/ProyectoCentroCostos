@@ -86,6 +86,48 @@ namespace CentroCostos.Controllers
             }
         }
 
+        // GET: EditarLinea
+        public ActionResult EditarLinea(int id)
+        {
+            var linea = _lineasDb.GetById(id);
+
+            var model = new NuevaLineaViewModel
+            {
+                Id = linea.Id,
+                Codigo = linea.Nombre_Linea
+            };
+
+            return View(model);
+        }
+
+        // POST: EditarLinea
+        [HttpPost]
+        public ActionResult EditarLinea(NuevaLineaViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var linea = _lineasDb.GetById(model.Id);
+
+                    linea.Nombre_Linea = model.Codigo;
+
+                    _lineasDb.Update(linea);
+                    _uow.SaveChanges();
+
+                    TempData["message"] = "La linea fue modificada correctamente";
+                    return RedirectToAction("ModelosLinea", new { id = model.Id });
+                }
+                catch(Exception e)
+                {
+                    logger.Error(e, "Error al editar linea");
+                    ModelState.AddModelError("", "Se produjo un error al intentar modificar esta linea");
+                }
+            }
+
+            return View(model);
+        }
+
         // GET: ModelosLinea
         public ActionResult ModelosLinea(int id)
         {
@@ -240,7 +282,17 @@ namespace CentroCostos.Controllers
         // GET: NuevoMaterial
         public ActionResult NuevoMaterial()
         {
-            return View();
+            var model = new MaterialViewModel
+            {
+                Categorias = _categoriasDb.FindAll()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Categoria
+                })
+            };
+
+            return View(model);
         }
 
         // POST: NuevoMaterial
@@ -249,11 +301,38 @@ namespace CentroCostos.Controllers
         {
             if(ModelState.IsValid)
             {
-                var material = new Material
+                try
                 {
-                    Codigo = model.Codigo,
-                    Descripcion_Material = model.Descripcion_Material,
-                    s
+                    var categoriaMaterial = _categoriasDb.GetById(model.CategoriaId);
+                    var costoMaterial = new Costo
+                    {
+                        esCostoDirecto = true,
+                        Comentario = model.Descripcion_Material,
+                        Descripcion = "Material"
+                    };
+
+                    var material = new Material
+                    {
+                        Codigo = model.Codigo,
+                        Descripcion_Material = model.Descripcion_Material,
+                        Costo_Unitario = model.Costo_Unitario,
+                        Consumo_Par = model.Consumo_Par,
+                        Unidad_Medida = model.Unidad_Medida,
+                        Categoria_Material = categoriaMaterial,
+                        Costo = costoMaterial
+                    };
+
+                    _materialesDb.Create(material);
+                    _uow.SaveChanges();
+                    TempData["message"] = "El material se agregó correctamente";
+
+                    return RedirectToAction("Materiales");
+                }
+                catch(Exception e)
+                {
+                    logger.Error(e, "Error al agregar material");
+                    ModelState.AddModelError("", "Se produjo un error al intentar agregar este material");
+                    return View(model);
                 }
             }
 

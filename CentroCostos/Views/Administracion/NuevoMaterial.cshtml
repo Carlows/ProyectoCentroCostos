@@ -1,0 +1,60 @@
+﻿@model CentroCostos.Models.ViewModels.MaterialViewModel
+
+<div class="span12">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Agregar Material</h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @using (Html.BeginForm("NuevoMaterial", "Administracion", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label">Codigo</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Codigo, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Descripción</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Descripcion_Material, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Unidad de medida</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Unidad_Medida, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Costo Unitario</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Costo_Unitario, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Categoria</label>
+                        <div class="controls">
+                            @Html.DropDownListFor(t => t.CategoriaId, Model.Categorias, "Selecciona una categoria", new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="@Url.Action("Materiales", "Administracion")" class="btn">Cancelar</a>
+                    </div>
+                </fieldset>
+            }
+        </div>
+        <!-- /widget-content -->
+    </div>
+</div>

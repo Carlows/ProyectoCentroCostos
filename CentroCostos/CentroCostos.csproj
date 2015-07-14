@@ -266,6 +266,8 @@
     <Content Include="Views\Administracion\EditarModelo.cshtml" />
     <Content Include="Views\Administracion\Materiales.cshtml" />
     <Content Include="Views\Administracion\NuevaCategoria.cshtml" />
+    <Content Include="Views\Administracion\NuevoMaterial.cshtml" />
+    <Content Include="Views\Administracion\EditarLinea.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
