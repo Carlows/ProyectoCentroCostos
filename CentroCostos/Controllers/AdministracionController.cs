@@ -18,16 +18,19 @@ namespace CentroCostos.Controllers
         private readonly IModeloRepository _modelosDb;
         private readonly IMaterialRepository _materialesDb;
         private readonly ICategoriaRepository _categoriasDb;
+        private readonly ICostoRepository _costosDb;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public AdministracionController(IUnitOfWork uow, ILineaRepository lineasRepository, 
-            IModeloRepository modelosRepository, IMaterialRepository materialRepository, ICategoriaRepository categoriaRepository)
+        public AdministracionController(IUnitOfWork uow, ILineaRepository lineasRepository,
+            IModeloRepository modelosRepository, IMaterialRepository materialRepository, ICategoriaRepository categoriaRepository,
+            ICostoRepository costosRepository)
         {
             _uow = uow;
             _lineasDb = lineasRepository;
             _modelosDb = modelosRepository;
             _materialesDb = materialRepository;
             _categoriasDb = categoriaRepository;
+            _costosDb = costosRepository;
         }
 
         // GET: Administracion
@@ -104,7 +107,7 @@ namespace CentroCostos.Controllers
         [HttpPost]
         public ActionResult EditarLinea(NuevaLineaViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -118,7 +121,7 @@ namespace CentroCostos.Controllers
                     TempData["message"] = "La linea fue modificada correctamente";
                     return RedirectToAction("ModelosLinea", new { id = model.Id });
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Error al editar linea");
                     ModelState.AddModelError("", "Se produjo un error al intentar modificar esta linea");
@@ -182,7 +185,7 @@ namespace CentroCostos.Controllers
 
                     return RedirectToAction("ModelosLinea", new { id = model.IdLinea });
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Error al agregar nuevo modelo");
                     ModelState.AddModelError("", "Se produjo un error al agregar el modelo");
@@ -253,7 +256,7 @@ namespace CentroCostos.Controllers
 
                     return RedirectToAction("ModelosLinea", new { id = model.IdLinea });
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Error al editar modelo");
 
@@ -299,7 +302,7 @@ namespace CentroCostos.Controllers
         [HttpPost]
         public ActionResult NuevoMaterial(MaterialViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -328,7 +331,7 @@ namespace CentroCostos.Controllers
 
                     return RedirectToAction("Materiales");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Error al agregar material");
                     ModelState.AddModelError("", "Se produjo un error al intentar agregar este material");
@@ -336,6 +339,76 @@ namespace CentroCostos.Controllers
                 }
             }
 
+            model.Categorias = _categoriasDb.FindAll()
+                                .Select(c => new SelectListItem
+                                {
+                                    Value = c.Id.ToString(),
+                                    Text = c.Categoria
+                                });
+            return View(model);
+        }
+
+        // GET: EditarMaterial
+        public ActionResult EditarMaterial(int id)
+        {
+            var material = _materialesDb.GetById(id);
+
+            var model = new MaterialViewModel
+            {
+                Id = material.Id,
+                CategoriaId = material.Categoria_Material.Id,
+                Codigo = material.Codigo,
+                Descripcion_Material = material.Descripcion_Material,
+                Costo_Unitario = material.Costo_Unitario,
+                Unidad_Medida = material.Unidad_Medida,
+                Categorias = _categoriasDb.FindAll()
+                                .Select(c => new SelectListItem
+                                {
+                                    Value = c.Id.ToString(),
+                                    Text = c.Categoria
+                                })
+            };
+
+            return View(model);
+        }
+
+        // POST: EditarMaterial
+        [HttpPost]
+        public ActionResult EditarMaterial(MaterialViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var material = _materialesDb.GetById(model.Id);
+                    var categoria = _categoriasDb.GetById(model.CategoriaId);
+
+                    material.Codigo = model.Codigo;
+                    material.Costo_Unitario = model.Costo_Unitario;
+                    material.Unidad_Medida = model.Unidad_Medida;
+                    material.Descripcion_Material = model.Descripcion_Material;
+                    material.Categoria_Material = categoria;
+                    material.Costo.Descripcion = model.Descripcion_Material;
+
+                    _materialesDb.Update(material);
+                    _uow.SaveChanges();
+
+                    return RedirectToAction("Materiales");
+                }
+                catch(Exception e)
+                {
+                    logger.Error(e, "Se produjo un error al editar un material");
+                    ModelState.AddModelError("", "Se produjo un error al intentar editar el material");
+                    return View(model);
+                }
+            }
+
+            model.Categorias = _categoriasDb.FindAll()
+                                .Select(c => new SelectListItem
+                                {
+                                    Value = c.Id.ToString(),
+                                    Text = c.Categoria
+                                });
             return View(model);
         }
 
@@ -349,7 +422,7 @@ namespace CentroCostos.Controllers
         [HttpPost]
         public ActionResult NuevaCategoria(CategoriaViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 CategoriaMaterial categoria = new CategoriaMaterial
                 {
@@ -362,7 +435,7 @@ namespace CentroCostos.Controllers
                     _uow.SaveChanges();
                     return RedirectToAction("Materiales");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Se produjo un error al agregar una categoria");
                     ModelState.AddModelError("", "Se produjo un error al intentar agregar la categoria");
@@ -373,6 +446,47 @@ namespace CentroCostos.Controllers
             return View(model);
         }
 
+        // GET: EditarCategoria
+        public ActionResult EditarCategoria(int id)
+        {
+            var categoria = _categoriasDb.GetById(id);
+
+            var model = new CategoriaViewModel
+            {
+                Id = categoria.Id,
+                Categoria = categoria.Categoria
+            };
+
+            return View(model);
+        }
+
+        // POST: EditarCategoria
+        [HttpPost]
+        public ActionResult EditarCategoria(CategoriaViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var categoria = _categoriasDb.GetById(model.Id);
+
+                    categoria.Categoria = model.Categoria;
+
+                    _categoriasDb.Update(categoria);
+                    _uow.SaveChanges();
+
+                    return RedirectToAction("Materiales");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, "Error al editar una categoria");
+
+                    ModelState.AddModelError("", "Se produjo un error al editar una categoria");
+                }
+            }
+
+            return View(model);
+        }
 
         private string CheckAndUploadImage(NuevoModeloViewModel model)
         {

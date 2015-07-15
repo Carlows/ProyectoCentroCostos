@@ -76,6 +76,7 @@ namespace CentroCostos.App_Start
             kernel.Bind<IUnidadCostoRepository>().To<UnidadCostoRepository>();
             kernel.Bind<IMaterialRepository>().To<MaterialRepository>();
             kernel.Bind<ICategoriaRepository>().To<CategoriaRepository>();
+            kernel.Bind<ICostoRepository>().To<CostoRepository>();
         }        
     }
 }

@@ -10,7 +10,7 @@
         <div class="widget-content">
             @using (Html.BeginForm("EditarModelo", "Administracion", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
             {
-                @Html.ValidationSummary(true)
+                @Html.Partial("_ValidationSummary")
 
                 <fieldset>
                     @Html.HiddenFor(x => x.id)

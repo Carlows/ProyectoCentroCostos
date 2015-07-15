@@ -4,11 +4,11 @@
     <div class="widget">
         <div class="widget-header">
             <i class="icon-bookmark"></i>
-            <h3>Agregar Material</h3>
+            <h3>Editar Material</h3>
         </div>
         <!-- /widget-header -->
         <div class="widget-content">
-            @using (Html.BeginForm("NuevoMaterial", "Administracion", FormMethod.Post, new { @class = "form-horizontal" }))
+            @using (Html.BeginForm("EditarMaterial", "Administracion", FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 @Html.Partial("_ValidationSummary")
 
@@ -58,3 +58,4 @@
         <!-- /widget-content -->
     </div>
 </div>
+

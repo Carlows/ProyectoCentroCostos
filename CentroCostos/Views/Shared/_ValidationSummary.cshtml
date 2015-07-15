@@ -1,0 +1,6 @@
+﻿@if (!Html.ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary(false)
+    </div>
+}

@@ -22,6 +22,7 @@ namespace CentroCostos.Models.ViewModels
         [Required(ErrorMessage = "El campo consumo por par es requerido")]
         public decimal Consumo_Par { get; set; }
 
+        [Required(ErrorMessage="Es necesario elegir una categoria")]
         public int CategoriaId { get; set; }
         public IEnumerable<SelectListItem> Categorias { get; set; }
     }

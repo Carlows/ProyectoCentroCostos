@@ -172,9 +172,11 @@
     <Compile Include="Infrastructure\Repositorios\BaseRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\CategoriaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\CentroCostoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\CostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\DepartamentoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICategoriaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICentroCostoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\ICostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IDepartamentoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ILineaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IMaterialRepository.cs" />
@@ -268,6 +270,9 @@
     <Content Include="Views\Administracion\NuevaCategoria.cshtml" />
     <Content Include="Views\Administracion\NuevoMaterial.cshtml" />
     <Content Include="Views\Administracion\EditarLinea.cshtml" />
+    <Content Include="Views\Administracion\EditarCategoria.cshtml" />
+    <Content Include="Views\Administracion\EditarMaterial.cshtml" />
+    <Content Include="Views\Shared\_ValidationSummary.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
