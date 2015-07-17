@@ -1,0 +1,48 @@
+﻿@model CentroCostos.Models.ViewModels.CostoViewModel
+
+<div class="span12">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Editar Costo</h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @using (Html.BeginForm("EditarCosto", "Administracion", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.Partial("_ValidationSummary")
+                @Html.HiddenFor(x => x.Id)
+
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">Codigo</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Codigo, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">Comentario</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Comentario, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">Es un costo directo?</label>
+                        <div class="controls">
+                            @Html.CheckBoxFor(t => t.esCostoDirecto, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="@Url.Action("Costos", "Administracion", new { id = @Model.Id })" class="btn">Cancelar</a>
+                    </div>
+                </fieldset>
+            }
+        </div>
+        <!-- /widget-content -->
+    </div>
+</div>
+

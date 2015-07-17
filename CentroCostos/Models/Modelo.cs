@@ -30,7 +30,7 @@ namespace CentroCostos.Models
         public string URL_Imagen { get; set; }
 
         // A que se refiere con pieza?
-        public string Pieza { get; set; }
+        public int Pieza { get; set; }
         public string Color { get; set; }
 
         [Required]

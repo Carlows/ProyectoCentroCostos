@@ -39,3 +39,5 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.ThirdMigration.resources
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Modelo_Fecha_Modificacion.resources
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.CorreccionMaterialModelo.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Pieza_Int.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Pieza_Int1.resources

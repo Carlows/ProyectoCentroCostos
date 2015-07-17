@@ -23,7 +23,7 @@ namespace CentroCostos.Models.ViewModels
         public Numeracion Numeracion { get; set; }
         public HttpPostedFileBase Imagen { get; set; }
         [Required(ErrorMessage = "El campo pieza es requerido")]
-        public string Pieza { get; set; }
+        public int Pieza { get; set; }
         [Required(ErrorMessage = "El campo color es requerido")]
         public string Color { get; set; }
     }

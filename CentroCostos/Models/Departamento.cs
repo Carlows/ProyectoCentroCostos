@@ -15,6 +15,6 @@ namespace CentroCostos.Models
 
         public string Nombre_Departamento { get; set; }
 
-        public virtual IEnumerable<Costo> Costos_Departamento { get; set; }
+        public virtual IList<Costo> Costos_Departamento { get; set; }
     }
 }

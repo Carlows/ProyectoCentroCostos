@@ -11,6 +11,7 @@ namespace CentroCostos.Infrastructure
     {
         public ApplicationContext() : base("DbCentroCostos")
         {
+            //Database.SetInitializer<ApplicationContext>(new DbInitializer());
         }
 
         public DbSet<Linea> Lineas { get; set; }
@@ -21,5 +22,13 @@ namespace CentroCostos.Infrastructure
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Orden> OrdenesProducidas { get; set; }
         public DbSet<UnidadCosto> CostosGenerados { get; set; }
+    }
+
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
+    {
+        protected override void Seed(ApplicationContext context)
+        {
+            base.Seed(context);
+        }
     }
 }

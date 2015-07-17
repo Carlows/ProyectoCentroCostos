@@ -210,6 +210,14 @@
     <Compile Include="Migrations\201507120155223_CorreccionMaterialModelo.Designer.cs">
       <DependentUpon>201507120155223_CorreccionMaterialModelo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507161854419_Pieza_Int.cs" />
+    <Compile Include="Migrations\201507161854419_Pieza_Int.Designer.cs">
+      <DependentUpon>201507161854419_Pieza_Int.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507161900057_Pieza_Int1.cs" />
+    <Compile Include="Migrations\201507161900057_Pieza_Int1.Designer.cs">
+      <DependentUpon>201507161900057_Pieza_Int1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoriaMaterial.cs" />
     <Compile Include="Models\CentroCosto.cs" />
@@ -222,6 +230,9 @@
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\UnidadCosto.cs" />
     <Compile Include="Models\ViewModels\CategoriaViewModel.cs" />
+    <Compile Include="Models\ViewModels\CostosAdmViewModel.cs" />
+    <Compile Include="Models\ViewModels\CostoViewModel.cs" />
+    <Compile Include="Models\ViewModels\DepartamentosAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\LineasProduccionAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\MaterialesAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\MaterialViewModel.cs" />
@@ -273,6 +284,10 @@
     <Content Include="Views\Administracion\EditarCategoria.cshtml" />
     <Content Include="Views\Administracion\EditarMaterial.cshtml" />
     <Content Include="Views\Shared\_ValidationSummary.cshtml" />
+    <Content Include="Views\Administracion\Departamentos.cshtml" />
+    <Content Include="Views\Administracion\Costos.cshtml" />
+    <Content Include="Views\Administracion\NuevoCosto.cshtml" />
+    <Content Include="Views\Administracion\EditarCosto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -299,6 +314,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507120155223_CorreccionMaterialModelo.resx">
       <DependentUpon>201507120155223_CorreccionMaterialModelo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507161854419_Pieza_Int.resx">
+      <DependentUpon>201507161854419_Pieza_Int.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507161900057_Pieza_Int1.resx">
+      <DependentUpon>201507161900057_Pieza_Int1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

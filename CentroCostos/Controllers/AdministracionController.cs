@@ -19,11 +19,12 @@ namespace CentroCostos.Controllers
         private readonly IMaterialRepository _materialesDb;
         private readonly ICategoriaRepository _categoriasDb;
         private readonly ICostoRepository _costosDb;
+        private readonly IDepartamentoRepository _departamentosDb;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public AdministracionController(IUnitOfWork uow, ILineaRepository lineasRepository,
             IModeloRepository modelosRepository, IMaterialRepository materialRepository, ICategoriaRepository categoriaRepository,
-            ICostoRepository costosRepository)
+            ICostoRepository costosRepository, IDepartamentoRepository departamentosRepository)
         {
             _uow = uow;
             _lineasDb = lineasRepository;
@@ -31,6 +32,7 @@ namespace CentroCostos.Controllers
             _materialesDb = materialRepository;
             _categoriasDb = categoriaRepository;
             _costosDb = costosRepository;
+            _departamentosDb = departamentosRepository;
         }
 
         // GET: Administracion
@@ -480,13 +482,130 @@ namespace CentroCostos.Controllers
                 catch (Exception e)
                 {
                     logger.Error(e, "Error al editar una categoria");
-
                     ModelState.AddModelError("", "Se produjo un error al editar una categoria");
                 }
             }
 
             return View(model);
         }
+
+        // GET: Costos
+        public ActionResult Costos()
+        {
+            var model = new CostosAdmViewModel
+            {
+                Costos = _costosDb.FindAll().Select(c => new CostoViewModel
+                {
+                    Id = c.Id,
+                    Comentario = c.Comentario,
+                    Descripcion = c.Descripcion,
+                    Departamento = c.Departamento != null ? c.Departamento.Nombre_Departamento : "",
+                    esCostoDirecto = c.esCostoDirecto
+                }).ToList()
+            };
+
+            return View(model);
+        }
+
+        // GET: NuevoCosto
+        public ActionResult NuevoCosto()
+        {
+            return View();
+        }
+
+        // POST: NuevoCosto
+        [HttpPost]
+        public ActionResult NuevoCosto(CostoViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var costo = new Costo
+                    {
+                        Descripcion = model.Descripcion,
+                        Comentario = model.Comentario,
+                        esCostoDirecto = (bool)model.esCostoDirecto
+                    };
+
+                    _costosDb.Create(costo);
+                    _uow.SaveChanges();
+
+                    return RedirectToAction("Costos");
+                }
+                catch(Exception e)
+                {
+                    logger.Error(e, "Error al agregar un costo");
+                    ModelState.AddModelError("", "Se produjo un error al intentar agregar este costo");
+                }
+            }
+
+            return View(model);
+        }
+
+        // GET: EditarCosto
+        public ActionResult EditarCosto(int id)
+        {
+            var costo = _costosDb.GetById(id);
+
+            var model = new CostoViewModel
+            {
+                Id = costo.Id,
+                Descripcion = costo.Descripcion,
+                Comentario = costo.Comentario,
+                esCostoDirecto = (bool)costo.esCostoDirecto
+            };
+
+            return View(model);
+        }
+
+        // POST: EditarCosto
+        [HttpPost]
+        public ActionResult EditarCosto(CostoViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var costo = _costosDb.GetById(model.Id);
+
+                    costo.Descripcion = model.Descripcion;
+                    costo.Comentario = model.Comentario;
+                    costo.esCostoDirecto = (bool)model.esCostoDirecto;                    
+
+                    _costosDb.Update(costo);
+                    _uow.SaveChanges();
+
+                    return RedirectToAction("Costos");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, "Error al editar un costo");
+                    ModelState.AddModelError("", "Se produjo un error al intentar editar este costo");
+                }
+            }
+
+            return View(model);
+        }
+
+        // GET: Departamentos
+        public ActionResult Departamentos()
+        {
+            var model = new DepartamentosAdmViewModel
+            {
+                Departamentos = _departamentosDb.FindAll()
+            };
+
+            return View(model);
+        }
+
+        // GET: NuevoDepartamento
+
+        // POST: NuevoDepartamento
+
+        // GET: EditarDepartamento
+
+        // POST: EditarDepartamento
 
         private string CheckAndUploadImage(NuevoModeloViewModel model)
         {
