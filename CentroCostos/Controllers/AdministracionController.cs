@@ -96,6 +96,12 @@ namespace CentroCostos.Controllers
         {
             var linea = _lineasDb.GetById(id);
 
+            if(linea == null)
+            {
+                TempData["message_error"] = "No se pudo encontrar el registro especificado";
+                return RedirectToAction("LineasProduccion");
+            }
+
             var model = new NuevaLineaViewModel
             {
                 Id = linea.Id,
@@ -137,6 +143,12 @@ namespace CentroCostos.Controllers
         public ActionResult ModelosLinea(int id)
         {
             var linea = _lineasDb.GetById(id);
+
+            if(linea == null)
+            {
+                TempData["message_error"] = "El registro especificado no se pudo encontrar";
+                return RedirectToAction("LineasProduccion");
+            }
 
             var model = new ModelosLineaViewModel
             {
@@ -185,6 +197,7 @@ namespace CentroCostos.Controllers
                     _modelosDb.Create(modeloNuevo);
                     _uow.SaveChanges();
 
+                    TempData["message"] = "El modelo fue creado correctamente";
                     return RedirectToAction("ModelosLinea", new { id = model.IdLinea });
                 }
                 catch (Exception e)
@@ -209,6 +222,7 @@ namespace CentroCostos.Controllers
             if (modelo == null || linea == null)
             {
                 logger.Warn("No se pudo encontrar el modelo o la linea con id {0}", id);
+                TempData["message_error"] = "No se pudo encontrar el registro especificado";
                 return RedirectToAction("ModelosLinea", new { id = idLinea });
             }
 
@@ -256,6 +270,7 @@ namespace CentroCostos.Controllers
                     _modelosDb.Update(curModel);
                     _uow.SaveChanges();
 
+                    TempData["message"] = "Registro modificado correctamente";
                     return RedirectToAction("ModelosLinea", new { id = model.IdLinea });
                 }
                 catch (Exception e)
@@ -355,6 +370,12 @@ namespace CentroCostos.Controllers
         {
             var material = _materialesDb.GetById(id);
 
+            if(material == null)
+            {
+                TempData["message_error"] = "No se pudo encontrar el registro especificado";
+                return RedirectToAction("Materiales");
+            }
+
             var model = new MaterialViewModel
             {
                 Id = material.Id,
@@ -395,6 +416,7 @@ namespace CentroCostos.Controllers
                     _materialesDb.Update(material);
                     _uow.SaveChanges();
 
+                    TempData["message"] = "Registro modificado correctamente";
                     return RedirectToAction("Materiales");
                 }
                 catch(Exception e)
@@ -435,6 +457,8 @@ namespace CentroCostos.Controllers
                 {
                     _categoriasDb.Create(categoria);
                     _uow.SaveChanges();
+
+                    TempData["message"] = "Registro agregado correctamente";
                     return RedirectToAction("Materiales");
                 }
                 catch (Exception e)
@@ -452,6 +476,12 @@ namespace CentroCostos.Controllers
         public ActionResult EditarCategoria(int id)
         {
             var categoria = _categoriasDb.GetById(id);
+
+            if(categoria == null)
+            {
+                TempData["message_error"] = "No se pudo encontrar el registro especificado";
+                return RedirectToAction("Materiales");
+            }
 
             var model = new CategoriaViewModel
             {
@@ -477,6 +507,7 @@ namespace CentroCostos.Controllers
                     _categoriasDb.Update(categoria);
                     _uow.SaveChanges();
 
+                    TempData["message"] = "Registro modificado correctamente";
                     return RedirectToAction("Materiales");
                 }
                 catch (Exception e)
@@ -531,6 +562,7 @@ namespace CentroCostos.Controllers
                     _costosDb.Create(costo);
                     _uow.SaveChanges();
 
+                    TempData["message"] = "Registro agregado correctamente";
                     return RedirectToAction("Costos");
                 }
                 catch(Exception e)
@@ -547,6 +579,12 @@ namespace CentroCostos.Controllers
         public ActionResult EditarCosto(int id)
         {
             var costo = _costosDb.GetById(id);
+
+            if(costo == null)
+            {
+                TempData["message_error"] = "No se pudo encontrar el registro especificado";
+                return RedirectToAction("Costos");
+            }
 
             var model = new CostoViewModel
             {
@@ -576,6 +614,7 @@ namespace CentroCostos.Controllers
                     _costosDb.Update(costo);
                     _uow.SaveChanges();
 
+                    TempData["message"] = "Registro modificado correctamente";
                     return RedirectToAction("Costos");
                 }
                 catch (Exception e)
@@ -600,12 +639,92 @@ namespace CentroCostos.Controllers
         }
 
         // GET: NuevoDepartamento
+        public ActionResult NuevoDepartamento()
+        {
+            return View();
+        }
 
         // POST: NuevoDepartamento
+        [HttpPost]
+        public ActionResult NuevoDepartamento(DepartamentoViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var departamento = new Departamento
+                    {
+                        Nombre_Departamento = model.Nombre_Departamento,
+                        esDeProduccion = model.esDeProduccion
+                    };
+
+                    _departamentosDb.Create(departamento);
+                    _uow.SaveChanges();
+
+                    TempData["message"] = "El registro fue creado correctamente";
+                    return RedirectToAction("Departamentos");
+                }
+                catch(Exception e)
+                {
+                    logger.Error(e, "Ocurrio un error al agregar un departamento");
+                    ModelState.AddModelError(String.Empty, "Ocurrio un error al agregar el departamento");
+                    return View(model);
+                }
+            }
+
+            return View(model);
+        }
 
         // GET: EditarDepartamento
+        public ActionResult EditarDepartamento(int id)
+        {
+            var departamento = _departamentosDb.GetById(id);
+
+            if(departamento == null)
+            {
+                TempData["message_error"] = "No se pudo encontrar el registro especificado";
+                return RedirectToAction("Departamentos");
+            }
+
+            var model = new DepartamentoViewModel
+            {
+                Id = departamento.Id,
+                Nombre_Departamento = departamento.Nombre_Departamento,
+                esDeProduccion = departamento.esDeProduccion
+            };
+
+            return View(model);
+        }
 
         // POST: EditarDepartamento
+        [HttpPost]
+        public ActionResult EditarDepartamento(DepartamentoViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var departamento = _departamentosDb.GetById(model.Id);
+
+                    departamento.Nombre_Departamento = model.Nombre_Departamento;
+                    departamento.esDeProduccion = model.esDeProduccion;
+
+                    _departamentosDb.Update(departamento);
+                    _uow.SaveChanges();
+
+                    TempData["message"] = "El registro fue modificado correctamente";
+                    return RedirectToAction("Departamentos");
+                }
+                catch(Exception e)
+                {
+                    logger.Error(e, "Error al editar departamento");
+                    ModelState.AddModelError(String.Empty, "Ocurrio un error al intentar editar el departamento");
+                    return View(model);
+                }
+            }
+
+            return View(model);
+        }
 
         private string CheckAndUploadImage(NuevoModeloViewModel model)
         {

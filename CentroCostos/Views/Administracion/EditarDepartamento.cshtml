@@ -1,0 +1,39 @@
+﻿@model CentroCostos.Models.ViewModels.DepartamentoViewModel
+
+<div class="span12">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Editar Departamento</h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @using (Html.BeginForm("EditarDepartamento", "Administracion", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.Partial("_ValidationSummary")
+                @Html.HiddenFor(t => t.Id)
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">Nombre del departamento</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Nombre_Departamento, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">¿Departamento de producción?</label>
+                        <div class="controls">
+                            @Html.CheckBoxFor(t => t.esDeProduccion)
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="@Url.Action("Departamentos", "Administracion")" class="btn">Cancelar</a>
+                    </div>
+                </fieldset>
+            }
+        </div>
+        <!-- /widget-content -->
+    </div>
+</div>

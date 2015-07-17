@@ -218,6 +218,10 @@
     <Compile Include="Migrations\201507161900057_Pieza_Int1.Designer.cs">
       <DependentUpon>201507161900057_Pieza_Int1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507172048486_ExtendidoDepartamento_EsProduccion.cs" />
+    <Compile Include="Migrations\201507172048486_ExtendidoDepartamento_EsProduccion.Designer.cs">
+      <DependentUpon>201507172048486_ExtendidoDepartamento_EsProduccion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoriaMaterial.cs" />
     <Compile Include="Models\CentroCosto.cs" />
@@ -233,6 +237,7 @@
     <Compile Include="Models\ViewModels\CostosAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\CostoViewModel.cs" />
     <Compile Include="Models\ViewModels\DepartamentosAdmViewModel.cs" />
+    <Compile Include="Models\ViewModels\DepartamentoViewModel.cs" />
     <Compile Include="Models\ViewModels\LineasProduccionAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\MaterialesAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\MaterialViewModel.cs" />
@@ -288,6 +293,8 @@
     <Content Include="Views\Administracion\Costos.cshtml" />
     <Content Include="Views\Administracion\NuevoCosto.cshtml" />
     <Content Include="Views\Administracion\EditarCosto.cshtml" />
+    <Content Include="Views\Administracion\NuevoDepartamento.cshtml" />
+    <Content Include="Views\Administracion\EditarDepartamento.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -320,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507161900057_Pieza_Int1.resx">
       <DependentUpon>201507161900057_Pieza_Int1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507172048486_ExtendidoDepartamento_EsProduccion.resx">
+      <DependentUpon>201507172048486_ExtendidoDepartamento_EsProduccion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

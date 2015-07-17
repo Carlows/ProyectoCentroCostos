@@ -15,6 +15,10 @@ namespace CentroCostos.Models
 
         public string Nombre_Departamento { get; set; }
 
+        // Pertenece este departamento al proceso productivo?
+        // Si sí pertenece, este departamento aparecerá en las fichas técnicas
+        public bool esDeProduccion { get; set; }
+
         public virtual IList<Costo> Costos_Departamento { get; set; }
     }
 }

@@ -1,9 +1,19 @@
 ﻿@if (TempData["message"] != null)
 {
-    <div class="span11">
+    <div class="span12 clearmarginleft">
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">×</button>
             @TempData["message"]
+        </div>
+    </div>
+}
+
+@if (TempData["message_error"] != null)
+{
+    <div class="span12 clearmarginleft">
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            @TempData["message_error"]
         </div>
     </div>
 }

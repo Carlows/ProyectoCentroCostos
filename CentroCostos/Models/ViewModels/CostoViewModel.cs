@@ -16,6 +16,6 @@ namespace CentroCostos.Models.ViewModels
 
         public string Departamento { get; set; }
 
-        public bool? esCostoDirecto { get; set; }
+        public bool esCostoDirecto { get; set; }
     }
 }
