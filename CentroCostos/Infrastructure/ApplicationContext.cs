@@ -9,7 +9,8 @@ namespace CentroCostos.Infrastructure
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext() : base("DbCentroCostos")
+        public ApplicationContext()
+            : base("DbCentroCostos")
         {
             //Database.SetInitializer<ApplicationContext>(new DbInitializer());
         }
@@ -22,6 +23,15 @@ namespace CentroCostos.Infrastructure
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Orden> OrdenesProducidas { get; set; }
         public DbSet<UnidadCosto> CostosGenerados { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+
+        protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
+           {
+               modelBuilder.Entity<Material>().Property(m => m.Costo_Unitario).HasPrecision(28, 12);
+               modelBuilder.Entity<Material>().Property(m => m.Consumo_Par).HasPrecision(28, 12);
+
+               base.OnModelCreating(modelBuilder);
+           }
     }
 
     public class DbInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>

@@ -22,5 +22,10 @@ namespace CentroCostos.Helpers
 
             return new MvcHtmlString(controller == currentController && action == currentAction ? cssClass : String.Empty);
         }
+
+        public static MvcHtmlString TrimDecimal(this HtmlHelper html, decimal value)
+        {
+            return new MvcHtmlString(value.ToString("F99").TrimEnd("0".ToCharArray()));
+        }
     }
 }

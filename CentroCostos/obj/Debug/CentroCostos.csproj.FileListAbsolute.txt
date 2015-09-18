@@ -42,3 +42,9 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Pieza_Int.resources
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Pieza_Int1.resources
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.ExtendidoDepartamento_EsProduccion.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.CC.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Decimales.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Decimales2.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Decimales3.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.test2.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.UserAuth2.resources

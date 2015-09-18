@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace CentroCostos.Controllers
 {
+    [Authorize]
     public class AdministracionController : Controller
     {
         private readonly IUnitOfWork _uow;
@@ -20,11 +21,12 @@ namespace CentroCostos.Controllers
         private readonly ICategoriaRepository _categoriasDb;
         private readonly ICostoRepository _costosDb;
         private readonly IDepartamentoRepository _departamentosDb;
+        private readonly ICentroCostoRepository _centrosDb;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public AdministracionController(IUnitOfWork uow, ILineaRepository lineasRepository,
             IModeloRepository modelosRepository, IMaterialRepository materialRepository, ICategoriaRepository categoriaRepository,
-            ICostoRepository costosRepository, IDepartamentoRepository departamentosRepository)
+            ICostoRepository costosRepository, IDepartamentoRepository departamentosRepository, ICentroCostoRepository centrosRepository)
         {
             _uow = uow;
             _lineasDb = lineasRepository;
@@ -33,6 +35,7 @@ namespace CentroCostos.Controllers
             _categoriasDb = categoriaRepository;
             _costosDb = costosRepository;
             _departamentosDb = departamentosRepository;
+            _centrosDb = centrosRepository;
         }
 
         // GET: Administracion
@@ -96,7 +99,7 @@ namespace CentroCostos.Controllers
         {
             var linea = _lineasDb.GetById(id);
 
-            if(linea == null)
+            if (linea == null)
             {
                 TempData["message_error"] = "No se pudo encontrar el registro especificado";
                 return RedirectToAction("LineasProduccion");
@@ -144,7 +147,7 @@ namespace CentroCostos.Controllers
         {
             var linea = _lineasDb.GetById(id);
 
-            if(linea == null)
+            if (linea == null)
             {
                 TempData["message_error"] = "El registro especificado no se pudo encontrar";
                 return RedirectToAction("LineasProduccion");
@@ -370,7 +373,7 @@ namespace CentroCostos.Controllers
         {
             var material = _materialesDb.GetById(id);
 
-            if(material == null)
+            if (material == null)
             {
                 TempData["message_error"] = "No se pudo encontrar el registro especificado";
                 return RedirectToAction("Materiales");
@@ -399,7 +402,7 @@ namespace CentroCostos.Controllers
         [HttpPost]
         public ActionResult EditarMaterial(MaterialViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -419,7 +422,7 @@ namespace CentroCostos.Controllers
                     TempData["message"] = "Registro modificado correctamente";
                     return RedirectToAction("Materiales");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Se produjo un error al editar un material");
                     ModelState.AddModelError("", "Se produjo un error al intentar editar el material");
@@ -477,7 +480,7 @@ namespace CentroCostos.Controllers
         {
             var categoria = _categoriasDb.GetById(id);
 
-            if(categoria == null)
+            if (categoria == null)
             {
                 TempData["message_error"] = "No se pudo encontrar el registro especificado";
                 return RedirectToAction("Materiales");
@@ -548,7 +551,7 @@ namespace CentroCostos.Controllers
         [HttpPost]
         public ActionResult NuevoCosto(CostoViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -565,7 +568,7 @@ namespace CentroCostos.Controllers
                     TempData["message"] = "Registro agregado correctamente";
                     return RedirectToAction("Costos");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Error al agregar un costo");
                     ModelState.AddModelError("", "Se produjo un error al intentar agregar este costo");
@@ -580,7 +583,7 @@ namespace CentroCostos.Controllers
         {
             var costo = _costosDb.GetById(id);
 
-            if(costo == null)
+            if (costo == null)
             {
                 TempData["message_error"] = "No se pudo encontrar el registro especificado";
                 return RedirectToAction("Costos");
@@ -601,7 +604,7 @@ namespace CentroCostos.Controllers
         [HttpPost]
         public ActionResult EditarCosto(CostoViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -609,7 +612,7 @@ namespace CentroCostos.Controllers
 
                     costo.Descripcion = model.Descripcion;
                     costo.Comentario = model.Comentario;
-                    costo.esCostoDirecto = (bool)model.esCostoDirecto;                    
+                    costo.esCostoDirecto = (bool)model.esCostoDirecto;
 
                     _costosDb.Update(costo);
                     _uow.SaveChanges();
@@ -648,7 +651,7 @@ namespace CentroCostos.Controllers
         [HttpPost]
         public ActionResult NuevoDepartamento(DepartamentoViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -664,7 +667,7 @@ namespace CentroCostos.Controllers
                     TempData["message"] = "El registro fue creado correctamente";
                     return RedirectToAction("Departamentos");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Ocurrio un error al agregar un departamento");
                     ModelState.AddModelError(String.Empty, "Ocurrio un error al agregar el departamento");
@@ -680,7 +683,7 @@ namespace CentroCostos.Controllers
         {
             var departamento = _departamentosDb.GetById(id);
 
-            if(departamento == null)
+            if (departamento == null)
             {
                 TempData["message_error"] = "No se pudo encontrar el registro especificado";
                 return RedirectToAction("Departamentos");
@@ -700,7 +703,7 @@ namespace CentroCostos.Controllers
         [HttpPost]
         public ActionResult EditarDepartamento(DepartamentoViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -715,13 +718,150 @@ namespace CentroCostos.Controllers
                     TempData["message"] = "El registro fue modificado correctamente";
                     return RedirectToAction("Departamentos");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Error al editar departamento");
                     ModelState.AddModelError(String.Empty, "Ocurrio un error al intentar editar el departamento");
                     return View(model);
                 }
             }
+
+            return View(model);
+        }
+
+        // GET: CentrosCosto
+        public ActionResult CentrosCosto()
+        {
+            var centros = _centrosDb.FindAll();
+
+            var model = new CentrosCostoAdmViewModel
+            {
+                CentrosdeCosto = centros
+            };
+
+            return View(model);
+        }
+
+        // GET: NuevoCentro
+        public ActionResult NuevoCentro()
+        {
+            var departamentos = _departamentosDb.GetDepartamentosNoAsignados();
+
+            var model = new CentroCostoViewModel
+            {
+                Departamentos = departamentos
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Nombre_Departamento
+                })
+            };
+
+            return View(model);
+        }
+
+        // POST: NuevoCentro
+        [HttpPost]
+        public ActionResult NuevoCentro(CentroCostoViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var departamento = _departamentosDb.GetById(model.DepartamentoId);
+
+                    var centro = new CentroCosto
+                    {
+                        Codigo = model.Codigo,
+                        Descripcion = model.Descripcion,
+                        Departamento = departamento
+                    };
+
+                    _centrosDb.Create(centro);
+                    _uow.SaveChanges();
+
+                    TempData["message"] = "Centro de costo creado correctamente";
+                    return RedirectToAction("CentrosCosto");
+                }
+                catch(Exception e)
+                {
+                    logger.Error(e, "Error al agregar nuevo centro");
+                    ModelState.AddModelError(String.Empty, "Se produjo un error al intentar agregar el centro de costo");                    
+                }
+            }
+
+            model.Departamentos = _departamentosDb.GetDepartamentosNoAsignados()
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Nombre_Departamento
+                });
+
+            return View(model);
+        }
+
+        // GET: EditarCentro
+        public ActionResult EditarCentro(int id)
+        {
+            var centro = _centrosDb.GetById(id);
+
+            if(centro == null)
+            {
+                TempData["message_error"] = "No se pudo encontrar el registro especificado";
+                return RedirectToAction("Centros");
+            }
+
+            var model = new CentroCostoViewModel
+            {
+                Id = centro.Id,
+                Codigo = centro.Codigo,
+                Descripcion = centro.Descripcion,
+                DepartamentoId = centro.Departamento.Id,
+                Departamentos = _departamentosDb.GetDepartamentosNoAsignados()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Nombre_Departamento
+                })
+            };
+
+            return View(model);
+        }
+
+        // POST: EditarCentro
+        [HttpPost]
+        public ActionResult EditarCentro(CentroCostoViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var centro = _centrosDb.GetById(model.Id);
+                    var departamento = _departamentosDb.GetById(model.DepartamentoId);
+
+                    centro.Codigo = model.Codigo;
+                    centro.Descripcion = model.Descripcion;
+                    centro.Departamento = departamento;
+
+                    _centrosDb.Update(centro);
+                    _uow.SaveChanges();
+
+                    TempData["message"] = "El centro de costos se modificó correctamente";
+                    return RedirectToAction("CentrosCosto");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, "Error al editar centro de costos");
+                    ModelState.AddModelError(String.Empty, "Se produjo un error al intentar editar el centro de costo");
+                }
+            }
+
+            model.Departamentos = _departamentosDb.GetDepartamentosNoAsignados()
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Nombre_Departamento
+                });
 
             return View(model);
         }

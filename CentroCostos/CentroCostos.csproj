@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministracionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LineaProduccionController.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Helpers\CsvActionResult.cs" />
     <Compile Include="Helpers\ExcelDataExport.cs" />
     <Compile Include="Helpers\IExcelDataExport.cs" />
+    <Compile Include="Helpers\PasswordHelpers.cs" />
     <Compile Include="Helpers\ViewHelpers.cs" />
     <Compile Include="Infrastructure\ApplicationContext.cs" />
     <Compile Include="Helpers\ExcelData.cs" />
@@ -189,6 +191,8 @@
     <Compile Include="Infrastructure\Repositorios\ModeloRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\OrdenRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\UnidadCostoRepository.cs" />
+    <Compile Include="Infrastructure\Services\IUserService.cs" />
+    <Compile Include="Infrastructure\Services\UserService.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Migrations\201507042112249_InitialMigration.cs" />
     <Compile Include="Migrations\201507042112249_InitialMigration.Designer.cs">
@@ -222,6 +226,30 @@
     <Compile Include="Migrations\201507172048486_ExtendidoDepartamento_EsProduccion.Designer.cs">
       <DependentUpon>201507172048486_ExtendidoDepartamento_EsProduccion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507192358010_CC.cs" />
+    <Compile Include="Migrations\201507192358010_CC.Designer.cs">
+      <DependentUpon>201507192358010_CC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507220150582_Decimales.cs" />
+    <Compile Include="Migrations\201507220150582_Decimales.Designer.cs">
+      <DependentUpon>201507220150582_Decimales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507220157024_Decimales2.cs" />
+    <Compile Include="Migrations\201507220157024_Decimales2.Designer.cs">
+      <DependentUpon>201507220157024_Decimales2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507220159348_Decimales3.cs" />
+    <Compile Include="Migrations\201507220159348_Decimales3.Designer.cs">
+      <DependentUpon>201507220159348_Decimales3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507220350198_test2.cs" />
+    <Compile Include="Migrations\201507220350198_test2.Designer.cs">
+      <DependentUpon>201507220350198_test2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509182231365_UserAuth2.cs" />
+    <Compile Include="Migrations\201509182231365_UserAuth2.Designer.cs">
+      <DependentUpon>201509182231365_UserAuth2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoriaMaterial.cs" />
     <Compile Include="Models\CentroCosto.cs" />
@@ -233,7 +261,10 @@
     <Compile Include="Models\Modelo.cs" />
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\UnidadCosto.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\ViewModels\CategoriaViewModel.cs" />
+    <Compile Include="Models\ViewModels\CentroCostoViewModel.cs" />
+    <Compile Include="Models\ViewModels\CentrosCostoAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\CostosAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\CostoViewModel.cs" />
     <Compile Include="Models\ViewModels\DepartamentosAdmViewModel.cs" />
@@ -295,6 +326,10 @@
     <Content Include="Views\Administracion\EditarCosto.cshtml" />
     <Content Include="Views\Administracion\NuevoDepartamento.cshtml" />
     <Content Include="Views\Administracion\EditarDepartamento.cshtml" />
+    <Content Include="Views\Administracion\CentrosCosto.cshtml" />
+    <Content Include="Views\Administracion\NuevoCentro.cshtml" />
+    <Content Include="Views\Administracion\EditarCentro.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -330,6 +365,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507172048486_ExtendidoDepartamento_EsProduccion.resx">
       <DependentUpon>201507172048486_ExtendidoDepartamento_EsProduccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507192358010_CC.resx">
+      <DependentUpon>201507192358010_CC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507220150582_Decimales.resx">
+      <DependentUpon>201507220150582_Decimales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507220157024_Decimales2.resx">
+      <DependentUpon>201507220157024_Decimales2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507220159348_Decimales3.resx">
+      <DependentUpon>201507220159348_Decimales3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507220350198_test2.resx">
+      <DependentUpon>201507220350198_test2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509182231365_UserAuth2.resx">
+      <DependentUpon>201509182231365_UserAuth2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

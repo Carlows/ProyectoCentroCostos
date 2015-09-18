@@ -18,6 +18,6 @@ namespace CentroCostos.Models
         public string Descripcion { get; set; }
         
         [Required]
-        public virtual Departamento Departamento_CentroCosto { get; set; }
+        public virtual Departamento Departamento { get; set; }
     }
 }

@@ -1,0 +1,46 @@
+﻿@model CentroCostos.Models.ViewModels.CentroCostoViewModel
+
+<div class="span12">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Agregar Centro de Costo</h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @using (Html.BeginForm("NuevoCentro", "Administracion", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.Partial("_ValidationSummary")
+
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label">Codigo</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Codigo, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Descripción</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(t => t.Descripcion, new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Departamento</label>
+                        <div class="controls">
+                            @Html.DropDownListFor(t => t.DepartamentoId, Model.Departamentos, "Selecciona un departamento", new { @class = "span6" })
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="@Url.Action("CentrosCosto", "Administracion")" class="btn">Cancelar</a>
+                    </div>
+                </fieldset>
+            }
+        </div>
+        <!-- /widget-content -->
+    </div>
+</div>

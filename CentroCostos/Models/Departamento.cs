@@ -11,6 +11,11 @@ namespace CentroCostos.Models
     [Table("Departamento")]
     public class Departamento
     {
+        public Departamento()
+        {
+            CentroCosto = new List<CentroCosto>();
+        }
+
         public int Id { get; set; }
 
         public string Nombre_Departamento { get; set; }
@@ -20,5 +25,8 @@ namespace CentroCostos.Models
         public bool esDeProduccion { get; set; }
 
         public virtual IList<Costo> Costos_Departamento { get; set; }
+
+        // Tiene que ser un solo centro de costo. La BD no me deja especificarlo de esa manera :(?
+        public virtual IList<CentroCosto> CentroCosto { get; set; }
     }
 }

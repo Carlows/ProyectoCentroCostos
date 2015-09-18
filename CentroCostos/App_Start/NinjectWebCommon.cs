@@ -13,6 +13,7 @@ namespace CentroCostos.App_Start
     using CentroCostos.Infrastructure;
     using CentroCostos.Helpers;
     using CentroCostos.Infrastructure.Repositorios;
+    using CentroCostos.Infrastructure.Services;
 
     public static class NinjectWebCommon 
     {
@@ -77,6 +78,7 @@ namespace CentroCostos.App_Start
             kernel.Bind<IMaterialRepository>().To<MaterialRepository>();
             kernel.Bind<ICategoriaRepository>().To<CategoriaRepository>();
             kernel.Bind<ICostoRepository>().To<CostoRepository>();
+            kernel.Bind<IUserService>().To<UserService>();
         }        
     }
 }

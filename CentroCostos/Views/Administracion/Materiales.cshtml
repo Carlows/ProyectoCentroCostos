@@ -1,5 +1,6 @@
 ﻿@model CentroCostos.Models.ViewModels.MaterialesAdmViewModel
 @using CentroCostos.Models
+@using CentroCostos.Helpers
 @Html.Partial("_TempMessage")
 
 <div class="span7 clearmarginleft">
@@ -32,7 +33,7 @@
                             <tr>
                                 <td class="span4">@material.Descripcion_Material</td>
                                 <td class="span2"> @material.Unidad_Medida </td>
-                                <td class="span2"> @material.Costo_Unitario </td>
+                                <td class="span2"> @Html.TrimDecimal(material.Costo_Unitario) </td>
                                 <td class="span2"> @material.Categoria_Material.Categoria </td>
                                 <td class="td-actions span2">
                                     <a href="@Url.Action("EditarMaterial", "Administracion", new { id = @material.Id })" class="btn btn-small btn-primary"><i class="btn-icon-only icon-search"> </i></a>

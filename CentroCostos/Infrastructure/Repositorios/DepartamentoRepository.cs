@@ -30,5 +30,12 @@ namespace CentroCostos.Infrastructure.Repositorios
                 .Costos_Departamento.Where(c => c.esCostoDirecto == false)
                 .ToList();
         }
+
+        public IEnumerable<Departamento> GetDepartamentosNoAsignados()
+        {
+            return DbContext.Departamentos
+                .Where(d => d.CentroCosto.Count == 0)
+                .ToList();
+        }
     }
 }
