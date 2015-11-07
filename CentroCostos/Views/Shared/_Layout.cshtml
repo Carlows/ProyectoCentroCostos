@@ -22,7 +22,18 @@
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </a><a class="brand" href="@Url.Action("Index", "Administracion")">Sistema Centros de Costos</a>
+
+                <div class="nav-collapse">
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                            <a href="@Url.Action("LogOut", "Account")" class="dropdown-toggle">
+                                <i class="icon-user"></i> Cerrar sesión
+                            </a>
+                        </li>
+                    </ul>
+                </div>    
             </div>
+                    
         </div>
     </div>
 
@@ -31,7 +42,7 @@
             <div class="container">
                 <ul class="mainnav">
                     <li class="@Html.IsSelected(controller:"Administracion")"><a href="@Url.Action("Index", "Administracion")"><i class="icon-file"></i><span>Administración</span> </a></li>
-                    <li class="@Html.IsSelected(controller:"LineasProduccion")"><a href="#"><i class="icon-th"></i><span>Lineas de Producción</span> </a> </li>
+                    <li class="@Html.IsSelected(controller:"LineaProduccion")"><a href="@Url.Action("Index", "LineaProduccion")"><i class="icon-th"></i><span>Lineas de Producción</span> </a> </li>
                     <li class=""><a href="#"><i class="icon-edit"></i><span>Centros de Costo</span> </a> </li>
                     <li><a href="#"><i class="icon-list-alt"></i><span>Reportes</span> </a> </li>
                 </ul>

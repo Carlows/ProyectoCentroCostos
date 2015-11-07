@@ -23,7 +23,7 @@ namespace CentroCostos.Models
         // so wtf are you going to do with this
         // tal vez una entidad nueva: Consumo_Modelo_Material
         public decimal Consumo_Par { get; set; }
-        
+
         [Required]
         public virtual Costo Costo { get; set; }
         [Required]

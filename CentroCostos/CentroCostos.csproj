@@ -63,6 +63,14 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -129,6 +137,18 @@
     <Content Include="Content\css\pages\signin.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\img\body-bg.png" />
+    <Content Include="Content\img\glyphicons-halflings-white.html" />
+    <Content Include="Content\img\glyphicons-halflings.html" />
+    <Content Include="Content\img\icons-sa7c41345d9.png" />
+    <Content Include="Content\img\message_avatar1.png" />
+    <Content Include="Content\img\message_avatar2.png" />
+    <Content Include="Content\img\signin\check.png" />
+    <Content Include="Content\img\signin\fb_btn.png" />
+    <Content Include="Content\img\signin\password.png" />
+    <Content Include="Content\img\signin\twitter_btn.png" />
+    <Content Include="Content\img\signin\user.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontgoogleapi.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -250,6 +270,10 @@
     <Compile Include="Migrations\201509182231365_UserAuth2.Designer.cs">
       <DependentUpon>201509182231365_UserAuth2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511061909521_AddedCategoryEntity.cs" />
+    <Compile Include="Migrations\201511061909521_AddedCategoryEntity.Designer.cs">
+      <DependentUpon>201511061909521_AddedCategoryEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoriaMaterial.cs" />
     <Compile Include="Models\CentroCosto.cs" />
@@ -269,6 +293,7 @@
     <Compile Include="Models\ViewModels\CostoViewModel.cs" />
     <Compile Include="Models\ViewModels\DepartamentosAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\DepartamentoViewModel.cs" />
+    <Compile Include="Models\ViewModels\LineaIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\LineasProduccionAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\MaterialesAdmViewModel.cs" />
     <Compile Include="Models\ViewModels\MaterialViewModel.cs" />
@@ -330,6 +355,10 @@
     <Content Include="Views\Administracion\NuevoCentro.cshtml" />
     <Content Include="Views\Administracion\EditarCentro.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Administracion\ImportarLineas.cshtml" />
+    <Content Include="Views\LineaProduccion\Index.cshtml" />
+    <Content Include="Views\Administracion\ImportarModelosLinea.cshtml" />
+    <Content Include="Views\Administracion\ImportarMateriales.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -339,7 +368,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\LineaProduccion\" />
+    <Folder Include="ExcelTemp\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507042112249_InitialMigration.resx">
@@ -383,6 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509182231365_UserAuth2.resx">
       <DependentUpon>201509182231365_UserAuth2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511061909521_AddedCategoryEntity.resx">
+      <DependentUpon>201511061909521_AddedCategoryEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

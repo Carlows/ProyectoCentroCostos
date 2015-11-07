@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CentroCostos.Models.ViewModels
 {
@@ -17,5 +18,8 @@ namespace CentroCostos.Models.ViewModels
         public string Departamento { get; set; }
 
         public bool esCostoDirecto { get; set; }
+
+        public int DepartamentoId { get; set; }
+        public IEnumerable<SelectListItem> Departamentos { get; set; }
     }
 }

@@ -1290,3 +1290,14 @@ color: #333;
 .shortcut-modified{
     width:25% !important;
 }
+
+.pagination-container{
+    float: none;
+    margin: 0 auto;
+    width:70%;
+}
+
+.pagination a{
+    color: #666;
+    background-color: #ddd;
+}

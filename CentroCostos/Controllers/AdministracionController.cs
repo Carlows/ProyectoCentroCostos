@@ -1,13 +1,17 @@
-﻿using CentroCostos.Infrastructure;
+﻿using CentroCostos.Helpers;
+using CentroCostos.Infrastructure;
 using CentroCostos.Infrastructure.Repositorios;
 using CentroCostos.Models;
 using CentroCostos.Models.ViewModels;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace CentroCostos.Controllers
 {
@@ -22,11 +26,13 @@ namespace CentroCostos.Controllers
         private readonly ICostoRepository _costosDb;
         private readonly IDepartamentoRepository _departamentosDb;
         private readonly ICentroCostoRepository _centrosDb;
+        private readonly IExcelData _manager;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public AdministracionController(IUnitOfWork uow, ILineaRepository lineasRepository,
             IModeloRepository modelosRepository, IMaterialRepository materialRepository, ICategoriaRepository categoriaRepository,
-            ICostoRepository costosRepository, IDepartamentoRepository departamentosRepository, ICentroCostoRepository centrosRepository)
+            ICostoRepository costosRepository, IDepartamentoRepository departamentosRepository, ICentroCostoRepository centrosRepository,
+            IExcelData manager)
         {
             _uow = uow;
             _lineasDb = lineasRepository;
@@ -36,6 +42,7 @@ namespace CentroCostos.Controllers
             _costosDb = costosRepository;
             _departamentosDb = departamentosRepository;
             _centrosDb = centrosRepository;
+            _manager = manager;
         }
 
         // GET: Administracion
@@ -44,6 +51,7 @@ namespace CentroCostos.Controllers
             return View();
         }
 
+        #region Lineas de produccion
         // GET: LineasProduccion
         public ActionResult LineasProduccion()
         {
@@ -290,12 +298,90 @@ namespace CentroCostos.Controllers
             }
         }
 
-        // GET: Materiales
-        public ActionResult Materiales()
+        //GET: ImportarLineas
+        public ActionResult ImportarLineas()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ImportarLineasExcel(HttpPostedFileBase file, string workSheetName)
+        {
+            string pathFile = UploadAndValidateExcelFile(file);
+
+            if(String.IsNullOrEmpty(pathFile) || String.IsNullOrEmpty(workSheetName))
+            {
+                ModelState.AddModelError(String.Empty, "Ocurrió un error al importar el archivo");
+                return RedirectToAction("ImportarLineas");
+            }
+
+            var data = ReadExcelFile(pathFile, workSheetName);
+            _lineasDb.CreateMultipleLineas(data);
+            _uow.SaveChanges();
+
+            return RedirectToAction("LineasProduccion");
+        }
+
+        [HttpPost]
+        public ActionResult ImportarModelosExcel(HttpPostedFileBase file, string workSheetName)
+        {
+            string pathFile = UploadAndValidateExcelFile(file);
+
+            if(String.IsNullOrEmpty(pathFile) || string.IsNullOrEmpty(workSheetName))
+            {
+                ModelState.AddModelError(String.Empty, "Ocurrió un error al importar el archivo");
+                return RedirectToAction("ImportarLineas");
+            }
+
+            var data = ReadExcelFile(pathFile, workSheetName);
+            _modelosDb.CreateMultipleModelos(data);
+            _uow.SaveChanges();
+
+            return RedirectToAction("LineasProduccion");
+        }
+
+        public ActionResult ImportarModelosLinea(int lineaId)
+        {
+            ViewBag.lineaId = lineaId;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ImportarModelosLineaExcel(HttpPostedFileBase file, string workSheetName, int lineaId)
+        {
+            string pathFile = UploadAndValidateExcelFile(file);
+
+            if (String.IsNullOrEmpty(pathFile) || string.IsNullOrEmpty(workSheetName))
+            {
+                ModelState.AddModelError(String.Empty, "Ocurrió un error al importar el archivo");
+                return RedirectToAction("ImportarModelosLinea");
+            }
+
+            var data = ReadExcelFile(pathFile, workSheetName);
+            _modelosDb.CreateMultipleModelos(data, lineaId);
+            _uow.SaveChanges();
+
+            return RedirectToAction("LineasProduccion");
+        }
+
+        #endregion
+
+        #region Materiales y categorias
+        // GET: Materiales
+        [Route("{query}/{page}")]
+        public ActionResult Materiales(string query, int? page)
+        {
+            int pageNumber = page ?? 1;
+            int pageSize = 10;
+
+            var materiales = _materialesDb.FindAll();
+
+            var materialesPaginated = materiales.ToPagedList(pageNumber, pageSize);
+
             var model = new MaterialesAdmViewModel
             {
-                Materiales = _materialesDb.FindAll(),
+                Materiales = materialesPaginated,
                 Categorias = _categoriasDb.FindAll()
             };
 
@@ -312,6 +398,12 @@ namespace CentroCostos.Controllers
                 {
                     Value = c.Id.ToString(),
                     Text = c.Categoria
+                }),
+                Departamentos = _departamentosDb.FindDepartamentosProduccion()
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Nombre_Departamento
                 })
             };
 
@@ -327,11 +419,13 @@ namespace CentroCostos.Controllers
                 try
                 {
                     var categoriaMaterial = _categoriasDb.GetById(model.CategoriaId);
+                    var departamentoMaterial = _departamentosDb.GetById(model.DepartamentoId);
                     var costoMaterial = new Costo
                     {
-                        esCostoDirecto = true,
+                        esCostoDirecto = model.esMaterialDirecto,
                         Comentario = model.Descripcion_Material,
-                        Descripcion = "Material"
+                        Descripcion = "Material",
+                        Departamento = departamentoMaterial
                     };
 
                     var material = new Material
@@ -365,6 +459,14 @@ namespace CentroCostos.Controllers
                                     Value = c.Id.ToString(),
                                     Text = c.Categoria
                                 });
+
+            model.Departamentos = _departamentosDb.FindDepartamentosProduccion()
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Nombre_Departamento
+                });
+
             return View(model);
         }
 
@@ -523,6 +625,33 @@ namespace CentroCostos.Controllers
             return View(model);
         }
 
+        // GET: ImportarMateriales
+        public ActionResult ImportarMateriales()
+        {
+            return View();
+        }
+
+        // POST: ImportarMateriales
+        [HttpPost]
+        public ActionResult ImportarMaterialesExcel(HttpPostedFileBase file, string workSheetName)
+        {
+            string pathFile = UploadAndValidateExcelFile(file);
+
+            if (String.IsNullOrEmpty(pathFile) || string.IsNullOrEmpty(workSheetName))
+            {
+                ModelState.AddModelError(String.Empty, "Ocurrió un error al importar el archivo");
+                return RedirectToAction("ImportarMateriales");
+            }
+
+            var data = ReadExcelFile(pathFile, workSheetName);
+            _materialesDb.CreateMultipleMateriales(data);
+            _uow.SaveChanges();
+
+            return RedirectToAction("Materiales");
+        }
+        #endregion
+
+        #region Costos
         // GET: Costos
         public ActionResult Costos()
         {
@@ -544,7 +673,17 @@ namespace CentroCostos.Controllers
         // GET: NuevoCosto
         public ActionResult NuevoCosto()
         {
-            return View();
+            var model = new CostoViewModel()
+            {
+                Departamentos = _departamentosDb.FindAll()
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Nombre_Departamento
+                })
+            };
+
+            return View(model);
         }
 
         // POST: NuevoCosto
@@ -555,11 +694,13 @@ namespace CentroCostos.Controllers
             {
                 try
                 {
+                    var departamentoCosto = _departamentosDb.GetById(model.DepartamentoId);
                     var costo = new Costo
                     {
                         Descripcion = model.Descripcion,
                         Comentario = model.Comentario,
-                        esCostoDirecto = (bool)model.esCostoDirecto
+                        esCostoDirecto = (bool)model.esCostoDirecto,
+                        Departamento = departamentoCosto
                     };
 
                     _costosDb.Create(costo);
@@ -594,7 +735,14 @@ namespace CentroCostos.Controllers
                 Id = costo.Id,
                 Descripcion = costo.Descripcion,
                 Comentario = costo.Comentario,
-                esCostoDirecto = (bool)costo.esCostoDirecto
+                esCostoDirecto = (bool)costo.esCostoDirecto,
+                DepartamentoId = costo.Departamento.Id,
+                Departamentos = _departamentosDb.FindAll()
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Nombre_Departamento
+                })
             };
 
             return View(model);
@@ -609,10 +757,12 @@ namespace CentroCostos.Controllers
                 try
                 {
                     var costo = _costosDb.GetById(model.Id);
+                    var departamentoCosto = _departamentosDb.GetById(model.DepartamentoId);
 
                     costo.Descripcion = model.Descripcion;
                     costo.Comentario = model.Comentario;
                     costo.esCostoDirecto = (bool)model.esCostoDirecto;
+                    costo.Departamento = departamentoCosto;
 
                     _costosDb.Update(costo);
                     _uow.SaveChanges();
@@ -629,7 +779,9 @@ namespace CentroCostos.Controllers
 
             return View(model);
         }
+        #endregion
 
+        #region Departamentos
         // GET: Departamentos
         public ActionResult Departamentos()
         {
@@ -728,7 +880,9 @@ namespace CentroCostos.Controllers
 
             return View(model);
         }
+        #endregion
 
+        #region Centros de costo
         // GET: CentrosCosto
         public ActionResult CentrosCosto()
         {
@@ -783,10 +937,10 @@ namespace CentroCostos.Controllers
                     TempData["message"] = "Centro de costo creado correctamente";
                     return RedirectToAction("CentrosCosto");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.Error(e, "Error al agregar nuevo centro");
-                    ModelState.AddModelError(String.Empty, "Se produjo un error al intentar agregar el centro de costo");                    
+                    ModelState.AddModelError(String.Empty, "Se produjo un error al intentar agregar el centro de costo");
                 }
             }
 
@@ -805,7 +959,7 @@ namespace CentroCostos.Controllers
         {
             var centro = _centrosDb.GetById(id);
 
-            if(centro == null)
+            if (centro == null)
             {
                 TempData["message_error"] = "No se pudo encontrar el registro especificado";
                 return RedirectToAction("Centros");
@@ -865,7 +1019,9 @@ namespace CentroCostos.Controllers
 
             return View(model);
         }
+        #endregion
 
+        #region HelperMethods
         private string CheckAndUploadImage(NuevoModeloViewModel model)
         {
             if (model.Imagen != null)
@@ -876,5 +1032,45 @@ namespace CentroCostos.Controllers
 
             return null;
         }
+
+        // Returns the path to the uploaded file
+        private string UploadAndValidateExcelFile(HttpPostedFileBase file)
+        {
+            string extension = Path.GetExtension(file.FileName);
+            if (extension.Equals(".xls") || extension.Equals(".xlsx"))
+            {
+                try
+                {
+                    // upload the file
+                    string fileName = string.Format("Excel-{0:dd-MM-yyyy-HH-mm-ss}{1}", DateTime.Now, extension);
+                    string path = Path.Combine(Server.MapPath("~/ExcelTemp"), fileName);
+                    file.SaveAs(path);
+
+                    return path;                   
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error al cargar archivo la servidor");
+                    return String.Empty;
+                }
+            }
+
+            return String.Empty;
+        }
+
+        private IEnumerable<DataRow> ReadExcelFile(string path, string workSheetName)
+        {
+            _manager.setPath(path);
+            var data = _manager.getData(workSheetName, true);
+
+            // delete the file
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+
+            return data;
+        }
+        #endregion
     }
 }

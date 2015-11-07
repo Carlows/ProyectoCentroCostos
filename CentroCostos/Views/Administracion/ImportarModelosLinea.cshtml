@@ -1,0 +1,33 @@
+﻿<div class="span5">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Importar Modelos</h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @using (Html.BeginForm("ImportarModelosLineaExcel",
+                        "Administracion",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+            {
+                <fieldset>
+                    @Html.Hidden("lineaId", ViewBag.lineaId as String)
+                    <label for="file">Selecciona un archivo:</label>
+                    <input type="file" name="file" id="file" />
+
+                    <div class="control-group">
+                        <label class="control-label">Nombre de la hoja de cálculo</label>
+                        <div class="controls">
+                            <input type="text" name="workSheetName" class="" />
+                        </div> <!-- /controls -->
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Importar</button>
+                    </div>
+                </fieldset>
+            }
+        </div>
+    </div>
+</div>

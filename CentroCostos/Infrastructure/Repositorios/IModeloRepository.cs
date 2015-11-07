@@ -1,6 +1,7 @@
 ﻿using CentroCostos.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,5 +13,7 @@ namespace CentroCostos.Infrastructure.Repositorios
     {
         Modelo Find(string codigo);
         string UploadImage(string codigo, HttpPostedFileBase imagen, string serverPath);
+        void CreateMultipleModelos(IEnumerable<DataRow> rows);
+        void CreateMultipleModelos(IEnumerable<DataRow> rows, int lineaId);
     }
 }

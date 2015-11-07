@@ -13,5 +13,6 @@ namespace CentroCostos.Infrastructure.Repositorios
         IEnumerable<Costo> GetCostosDirectos(int departamento);
         IEnumerable<Costo> GetCostosIndirectos(int departamento);
         IEnumerable<Departamento> GetDepartamentosNoAsignados();
+        IEnumerable<Departamento> FindDepartamentosProduccion();
     }
 }

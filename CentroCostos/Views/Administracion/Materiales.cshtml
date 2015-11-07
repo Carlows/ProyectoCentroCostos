@@ -1,6 +1,8 @@
 ﻿@model CentroCostos.Models.ViewModels.MaterialesAdmViewModel
 @using CentroCostos.Models
 @using CentroCostos.Helpers
+@using PagedList.Mvc; 
+@using PagedList;
 @Html.Partial("_TempMessage")
 
 <div class="span7 clearmarginleft">
@@ -41,12 +43,19 @@
                                 </td>
                             </tr>
                         }
+                        
                     </tbody>
                 </table>
 
             }
         </div>
         <!-- /widget-content -->
+    </div>
+
+    <div class="widget">
+        <div class="widget-content">
+            @Html.PagedListPager(Model.Materiales, page => Url.Action("Materiales", new { page = page }))
+        </div>
     </div>
 </div>
 <div class="span5">
@@ -60,7 +69,7 @@
             <div class="shortcuts">
                 <a href="@Url.Action("NuevoMaterial", "Administracion")" class="shortcut"><i class="shortcut-icon icon-pencil"></i><span class="shortcut-label">Nuevo material</span></a>
                 <a href="@Url.Action("NuevaCategoria", "Administracion")" class="shortcut"><i class="shortcut-icon icon-circle-arrow-left"></i><span class="shortcut-label">Nueva categoria</span></a>
-                <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-eraser"></i><span class="shortcut-label">Importar datos</span></a>
+                <a href="@Url.Action("ImportarMateriales", "Administracion")" class="shortcut"><i class="shortcut-icon icon-eraser"></i><span class="shortcut-label">Importar datos</span></a>
             </div>
             <!-- /shortcuts -->
         </div>
@@ -100,6 +109,8 @@
                                 </td>
                             </tr>
                         }
+
+
                     </tbody>
                 </table>
 

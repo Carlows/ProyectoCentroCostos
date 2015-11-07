@@ -17,6 +17,11 @@ namespace CentroCostos.Infrastructure.Repositorios
             return DbContext.Departamentos.Where(d => d.Nombre_Departamento.StartsWith(nombre)).Single();
         }
 
+        public IEnumerable<Departamento> FindDepartamentosProduccion()
+        {
+            return DbContext.Departamentos.Where(d => d.esDeProduccion == true).ToList();
+        }
+
         public IEnumerable<Costo> GetCostosDirectos(int departamento)
         {
             return DbContext.Departamentos.Find(departamento)

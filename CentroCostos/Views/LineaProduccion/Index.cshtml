@@ -1,0 +1,70 @@
+﻿@model CentroCostos.Models.ViewModels.LineaIndexViewModel
+
+<div class="span8 clearmarginleft">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Ficha Técnica</h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @if (Model.Modelo == null)
+            {
+                <div class="alert alert-link">Selecciona un modelo</div>
+            }
+            else
+            {
+                <div class="row-fluid">
+                    <div class="span6">
+                        <img src="~/Content/@Model.Modelo.URL_Imagen" width="300" height="150" />
+
+                    </div>
+                    <div class="span4">
+                        <h2>@Model.Modelo.Codigo</h2>
+                        <label>@Model.Modelo.Planta</label>
+                        <label>@Model.Modelo.Horma</label>
+                        <label>@Model.Modelo.Color</label>
+                        <label>@Model.Modelo.Pieza</label>
+                        <label>@Model.Modelo.Tipo_Suela</label>
+                    </div>
+                </div>
+                
+            }
+        </div>
+        <!-- /widget-content -->
+    </div>
+</div>
+
+<div class="span4">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Selecciona un modelo</h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @using (Html.BeginForm("Index",
+                        "LineaProduccion",
+                        FormMethod.Get))
+            {
+                <div class="control-group">
+                    <label class="control-label">Lineas</label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.LineaID, Model.Lineas, "Selecciona una linea", new { onchange = "this.form.submit()" })
+                    </div> <!-- /controls -->
+                </div>
+                if (Model.LineaID != null)
+                {
+                    <div class="control-group">
+                        <label class="control-label">Modelos</label>
+                        <div class="controls">
+                            @Html.DropDownListFor(m => m.ModeloID, Model.ModelosLinea, "Selecciona un modelo", new { onchange = "this.form.submit()" })
+                        </div> <!-- /controls -->
+                    </div>
+                }
+
+            }
+        </div>
+        <!-- /widget-content -->
+    </div>
+</div>

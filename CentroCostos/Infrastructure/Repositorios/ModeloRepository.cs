@@ -1,6 +1,7 @@
 ﻿using CentroCostos.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -9,10 +10,13 @@ namespace CentroCostos.Infrastructure.Repositorios
 {
     public class ModeloRepository : BaseRepository<Modelo, int>, IModeloRepository
     {
-        public ModeloRepository(ApplicationContext dbContext)
+        public ModeloRepository(ApplicationContext dbContext, ILineaRepository lineasRepo)
             : base(dbContext)
         {
+            _lineasDb = lineasRepo;
         }
+
+        private readonly ILineaRepository _lineasDb;
 
         public Modelo Find(string codigo)
         {
@@ -48,6 +52,78 @@ namespace CentroCostos.Infrastructure.Repositorios
             {
                 throw new ArgumentException("file");
             }
+        }
+
+
+        public void CreateMultipleModelos(IEnumerable<System.Data.DataRow> rows)
+        {
+            IList<Modelo> modelos = new List<Modelo>();
+            foreach (DataRow row in rows)
+            {
+                string nombreLinea = row["Linea"].ToString();
+                var linea = DbContext.Lineas.Where(l => l.Nombre_Linea == nombreLinea).SingleOrDefault();
+
+                if (linea == null)
+                {
+                    throw new ArgumentException("Linea no existe");
+                    return;
+                }
+                else
+                {
+                    modelos.Add(new Modelo()
+                    {
+                        Codigo = row["Codigo"].ToString(),
+                        Horma = row["Horma"].ToString(),
+                        Planta = row["Planta"].ToString(),
+                        Tipo_Suela = row["Suela"].ToString(),
+                        Numeracion = new Numeracion
+                        {
+                            Menor = byte.Parse(row["NumeracionMenor"].ToString()),
+                            Mayor = byte.Parse(row["NumeracionMayor"].ToString())
+                        },
+                        Pieza = int.Parse(row["Pieza"].ToString()),
+                        Color = row["Color"].ToString(),
+                        Linea = linea
+                    });
+                }
+            }
+
+            this.CreateMultiple(modelos);
+        }
+
+
+        public void CreateMultipleModelos(IEnumerable<DataRow> rows, int lineaId)
+        {
+            IList<Modelo> modelos = new List<Modelo>();
+            var linea = _lineasDb.GetById(lineaId);
+
+            if(linea == null)
+            {
+                throw new ArgumentException("Linea no existe");
+            }
+            else
+            {
+                foreach (DataRow row in rows)
+                {
+                    modelos.Add(new Modelo()
+                    {
+                        Codigo = row["Codigo"].ToString(),
+                        Horma = row["Horma"].ToString(),
+                        Planta = row["Planta"].ToString(),
+                        Tipo_Suela = row["Suela"].ToString(),
+                        Numeracion = new Numeracion
+                        {
+                            Menor = byte.Parse(row["NumeracionMenor"].ToString()),
+                            Mayor = byte.Parse(row["NumeracionMayor"].ToString())
+                        },
+                        Pieza = int.Parse(row["Pieza"].ToString()),
+                        Color = row["Color"].ToString(),
+                        Linea = linea
+                    });
+                }
+
+                this.CreateMultiple(modelos);
+            }            
         }
     }
 }

@@ -13,9 +13,13 @@ namespace CentroCostos.Helpers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        string _path;
+        private string _path { get; set; }
 
-        public ExcelData(string path)
+        public ExcelData()
+        {
+        }
+
+        public void setPath(string path)
         {
             _path = path;
         }

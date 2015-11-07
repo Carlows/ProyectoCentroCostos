@@ -15,9 +15,12 @@ namespace CentroCostos.Migrations
 
         protected override void Seed(CentroCostos.Infrastructure.ApplicationContext context)
         {
-            UserService service = new UserService(context);
+            if (context.Usuarios.ToList().Count == 0)
+            {
+                UserService service = new UserService(context);
 
-            service.CreateUser("carlos", "carlos12");
+                service.CreateUser("admin", "admin12");
+            }
         }
     }
 }

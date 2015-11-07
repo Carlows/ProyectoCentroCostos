@@ -32,7 +32,6 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\System.Web.WebPages.Razor.xml
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.dll
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.pdb
-C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.csprojResolveAssemblyReference.cache
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.InitialMigration.resources
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.csproj.GenerateResource.Cache
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.SecondMigration.resources
@@ -48,3 +47,9 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.Decimales3.resources
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.test2.resources
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.UserAuth2.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.AddedCategoryEntity.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\PagedList.dll
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\PagedList.Mvc.dll
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\PagedList.xml
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\PagedList.Mvc.xml
+C:\Users\Carlos\Documents\Visual Studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.csprojResolveAssemblyReference.cache
