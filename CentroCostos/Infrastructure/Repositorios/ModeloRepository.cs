@@ -1,4 +1,5 @@
-﻿using CentroCostos.Models;
+﻿using CentroCostos.Helpers;
+using CentroCostos.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,10 +11,13 @@ namespace CentroCostos.Infrastructure.Repositorios
 {
     public class ModeloRepository : BaseRepository<Modelo, int>, IModeloRepository
     {
-        public ModeloRepository(ApplicationContext dbContext, ILineaRepository lineasRepo)
+        private IImageManager _imageManager;
+
+        public ModeloRepository(ApplicationContext dbContext, ILineaRepository lineasRepo, IImageManager imageManager)
             : base(dbContext)
         {
             _lineasDb = lineasRepo;
+            _imageManager = imageManager;
         }
 
         private readonly ILineaRepository _lineasDb;
@@ -24,38 +28,24 @@ namespace CentroCostos.Infrastructure.Repositorios
         }
 
         // devuelve la URL de la imagen para ser guardada en la BD
-        public string UploadImage(string codigo, HttpPostedFileBase file, string serverPath)
+        public string UploadImageWithUniqueId(string codigo, HttpPostedFileBase file, string serverPath)
         {
             if (file == null || file.ContentLength == 0)
             {
                 throw new ArgumentNullException("file");
             }
 
-            string extension = Path.GetExtension(file.FileName);
-            if (extension.Equals(".jpg") || extension.Equals(".jpeg") || extension.Equals(".png"))
-            {
-                string dirPath = Path.Combine(serverPath, "Imgs");
+            string pathToCreate = Path.Combine(serverPath, "Imgs", codigo);
+            string fileName = string.Format("{0}{1}", codigo, Guid.NewGuid().ToString());
+            string storagePath = Path.Combine("Imgs", codigo, fileName);
 
-                if (!Directory.Exists(dirPath))
-                    Directory.CreateDirectory(dirPath);
+            string pathUploaded = _imageManager.UploadImageToServer(file, pathToCreate, serverPath, storagePath, fileName);
 
-                string ext = Path.GetExtension(file.FileName);
-                string fileName = string.Format("{0}{1}", codigo, ext);
-                string userFolder = Path.Combine("Imgs", fileName);
-                string path = Path.Combine(serverPath, userFolder);
-
-                file.SaveAs(path);
-
-                return userFolder;
-            }
-            else
-            {
-                throw new ArgumentException("file");
-            }
+            return pathUploaded;
         }
 
 
-        public void CreateMultipleModelos(IEnumerable<System.Data.DataRow> rows)
+        public void CreateMultipleModelos(IEnumerable<DataRow> rows)
         {
             IList<Modelo> modelos = new List<Modelo>();
             foreach (DataRow row in rows)
@@ -97,7 +87,7 @@ namespace CentroCostos.Infrastructure.Repositorios
             IList<Modelo> modelos = new List<Modelo>();
             var linea = _lineasDb.GetById(lineaId);
 
-            if(linea == null)
+            if (linea == null)
             {
                 throw new ArgumentException("Linea no existe");
             }
@@ -123,7 +113,7 @@ namespace CentroCostos.Infrastructure.Repositorios
                 }
 
                 this.CreateMultiple(modelos);
-            }            
+            }
         }
     }
 }

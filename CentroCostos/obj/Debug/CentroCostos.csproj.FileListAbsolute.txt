@@ -53,3 +53,5 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\PagedList.xml
 C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\bin\PagedList.Mvc.xml
 C:\Users\Carlos\Documents\Visual Studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.csprojResolveAssemblyReference.cache
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.esMaterialDirecto.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\CentroCostos\CentroCostos\obj\Debug\CentroCostos.Migrations.CostoEliminadoDeMaterial.resources

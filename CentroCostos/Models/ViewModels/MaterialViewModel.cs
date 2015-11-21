@@ -27,8 +27,5 @@ namespace CentroCostos.Models.ViewModels
         [Required(ErrorMessage="Es necesario elegir una categoria")]
         public int CategoriaId { get; set; }
         public IEnumerable<SelectListItem> Categorias { get; set; }
-
-        public int DepartamentoId { get; set; }
-        public IEnumerable<SelectListItem> Departamentos { get; set; }
     }
 }

@@ -185,6 +185,8 @@
     <Compile Include="Helpers\CsvActionResult.cs" />
     <Compile Include="Helpers\ExcelDataExport.cs" />
     <Compile Include="Helpers\IExcelDataExport.cs" />
+    <Compile Include="Helpers\IImageManager.cs" />
+    <Compile Include="Helpers\ImageManager.cs" />
     <Compile Include="Helpers\PasswordHelpers.cs" />
     <Compile Include="Helpers\ViewHelpers.cs" />
     <Compile Include="Infrastructure\ApplicationContext.cs" />
@@ -274,6 +276,14 @@
     <Compile Include="Migrations\201511061909521_AddedCategoryEntity.Designer.cs">
       <DependentUpon>201511061909521_AddedCategoryEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511212305150_esMaterialDirecto.cs" />
+    <Compile Include="Migrations\201511212305150_esMaterialDirecto.Designer.cs">
+      <DependentUpon>201511212305150_esMaterialDirecto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511212324107_CostoEliminadoDeMaterial.cs" />
+    <Compile Include="Migrations\201511212324107_CostoEliminadoDeMaterial.Designer.cs">
+      <DependentUpon>201511212324107_CostoEliminadoDeMaterial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoriaMaterial.cs" />
     <Compile Include="Models\CentroCosto.cs" />
@@ -281,7 +291,6 @@
     <Compile Include="Models\Departamento.cs" />
     <Compile Include="Models\Linea.cs" />
     <Compile Include="Models\Material.cs" />
-    <Compile Include="Models\MaterialExtension.cs" />
     <Compile Include="Models\Modelo.cs" />
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\UnidadCosto.cs" />
@@ -415,6 +424,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511061909521_AddedCategoryEntity.resx">
       <DependentUpon>201511061909521_AddedCategoryEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511212305150_esMaterialDirecto.resx">
+      <DependentUpon>201511212305150_esMaterialDirecto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511212324107_CostoEliminadoDeMaterial.resx">
+      <DependentUpon>201511212324107_CostoEliminadoDeMaterial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

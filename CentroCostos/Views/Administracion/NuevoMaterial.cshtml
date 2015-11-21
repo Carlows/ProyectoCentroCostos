@@ -49,13 +49,6 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">Departamento</label>
-                        <div class="controls">
-                            @Html.DropDownListFor(t => t.DepartamentoId, Model.Departamentos, "Selecciona un departamento de produccion", new { @class = "span6" })
-                        </div> <!-- /controls -->
-                    </div>
-
-                    <div class="control-group">
                         <label class="control-label" for="firstname">Es un material directo?</label>
                         <div class="controls">
                             @Html.CheckBoxFor(t => t.esMaterialDirecto)

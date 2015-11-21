@@ -19,10 +19,19 @@
             }
             else
             {
+                <form action="@Url.Action("Materiales", "Administracion")" method="get">
+                    <div class="controls">
+                        <div class="control-group">
+                            <input class="" id="txtQuery" name="query" type="text">
+                            <button class="btn btn-large" type="submit">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+                
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th> Descripción </th>
+                            <th> Codigo </th>
                             <th> Unidad Medida </th>
                             <th> Costo Unitario </th>
                             <th> Categoria </th>
@@ -33,10 +42,10 @@
                         @foreach (Material material in Model.Materiales)
                         {
                             <tr>
-                                <td class="span4">@material.Descripcion_Material</td>
+                                <td class="span4">@material.Codigo</td>
                                 <td class="span2"> @material.Unidad_Medida </td>
                                 <td class="span2"> @Html.TrimDecimal(material.Costo_Unitario) </td>
-                                <td class="span2"> @material.Categoria_Material.Categoria </td>
+                                <td class="span2"> @material.Categoria_Material.NombreCategoria </td>
                                 <td class="td-actions span2">
                                     <a href="@Url.Action("EditarMaterial", "Administracion", new { id = @material.Id })" class="btn btn-small btn-primary"><i class="btn-icon-only icon-search"> </i></a>
                                     <a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a>
@@ -47,15 +56,10 @@
                     </tbody>
                 </table>
 
+                @Html.PagedListPager(Model.Materiales, page => Url.Action("Materiales", new { page = page, query = ViewBag.query }))
             }
         </div>
         <!-- /widget-content -->
-    </div>
-
-    <div class="widget">
-        <div class="widget-content">
-            @Html.PagedListPager(Model.Materiales, page => Url.Action("Materiales", new { page = page }))
-        </div>
     </div>
 </div>
 <div class="span5">
@@ -101,7 +105,7 @@
                         @foreach (CategoriaMaterial categoria in Model.Categorias)
                         {
                             <tr>
-                                <td class="span3">@categoria.Categoria</td>
+                                <td class="span3">@categoria.NombreCategoria</td>
                                 <td class="span2"> @categoria.Materiales_Categoria.Count </td>
                                 <td class="td-actions span2">
                                     <a href="@Url.Action("EditarCategoria", "Administracion", new { id = @categoria.Id })" class="btn btn-small btn-primary"><i class="btn-icon-only icon-search"> </i></a>

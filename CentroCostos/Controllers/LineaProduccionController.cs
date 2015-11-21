@@ -27,64 +27,33 @@ namespace CentroCostos.Controllers
         // GET: LineaProduccion
         public ActionResult Index(LineaIndexViewModel model)
         {
-            if(model.LineaID == null)
-            {
-                model = new LineaIndexViewModel()
-                {
-                    Lineas = _lineasDb.FindAll()
-                    .Select(l => new SelectListItem()
-                    {
-                        Text = l.Nombre_Linea,
-                        Value = l.Id.ToString()
-                    }).ToList(),
-                    LineaID = model.LineaID,
-                    ModeloID = model.ModeloID
-                };
-            }
-            else if(model.ModeloID == null)
-            {
-                model = new LineaIndexViewModel()
-                {
-                    Lineas = _lineasDb.FindAll()
-                    .Select(l => new SelectListItem()
-                    {
-                        Text = l.Nombre_Linea,
-                        Value = l.Id.ToString()
-                    }).ToList(),
-                    ModelosLinea = _lineasDb.GetById((int)model.LineaID).Modelos_Linea
-                    .Select(m => new SelectListItem()
-                    {
-                        Text = m.Codigo,
-                        Value = m.Id.ToString()
-                    }).ToList(),
-                    LineaID = model.LineaID,
-                    ModeloID = model.ModeloID
-                };
-            }
-            else
-            {
-                model = new LineaIndexViewModel()
-                {
-                    Lineas = _lineasDb.FindAll()
-                    .Select(l => new SelectListItem()
-                    {
-                        Text = l.Nombre_Linea,
-                        Value = l.Id.ToString()
-                    }).ToList(),
-                    ModelosLinea = _lineasDb.GetById((int)model.LineaID).Modelos_Linea
-                    .Select(m => new SelectListItem()
-                    {
-                        Text = m.Codigo,
-                        Value = m.Id.ToString()
-                    }).ToList(),
-                    LineaID = model.LineaID,
-                    ModeloID = model.ModeloID,
-                    Modelo = _modelosDb.GetById((int)model.ModeloID),
-                };
-            }
-            
+            LineaIndexViewModel newModel = new LineaIndexViewModel();
 
-            return View(model);
+            newModel.Lineas = _lineasDb.FindAll().Select(l => new SelectListItem() { Text = l.Nombre_Linea, Value = l.Id.ToString() }).ToList();
+            newModel.LineaID = model.LineaID;
+            newModel.ModeloID = model.ModeloID;
+
+            if (model.ModeloID == null && model.LineaID != null)
+            {
+                newModel.ModelosLinea = ObtenerModelos(model);
+            }
+            else if(model.ModeloID != null)
+            {
+                newModel.ModelosLinea = ObtenerModelos(model);
+                newModel.Modelo = _modelosDb.GetById((int)model.ModeloID);
+            }
+
+            return View(newModel);
+        }
+
+        private IList<SelectListItem> ObtenerModelos(LineaIndexViewModel model)
+        {
+            return _lineasDb.GetById((int)model.LineaID).Modelos_Linea
+                .Select(m => new SelectListItem()
+                {
+                    Text = m.Codigo,
+                    Value = m.Id.ToString()
+                }).ToList();
         }
     }
 }

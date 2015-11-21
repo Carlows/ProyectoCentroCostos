@@ -16,6 +16,7 @@ namespace CentroCostos.Models
         public string Codigo { get; set; }
         public string Descripcion_Material { get; set; }
         public string Unidad_Medida { get; set; }
+        public bool esMaterialDirecto { get; set; }
 
         public decimal Costo_Unitario { get; set; }
 
@@ -24,8 +25,6 @@ namespace CentroCostos.Models
         // tal vez una entidad nueva: Consumo_Modelo_Material
         public decimal Consumo_Par { get; set; }
 
-        [Required]
-        public virtual Costo Costo { get; set; }
         [Required]
         public virtual CategoriaMaterial Categoria_Material { get; set; }
     }

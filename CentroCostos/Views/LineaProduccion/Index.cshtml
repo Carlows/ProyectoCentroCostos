@@ -15,17 +15,22 @@
             else
             {
                 <div class="row-fluid">
-                    <div class="span6">
-                        <img src="~/Content/@Model.Modelo.URL_Imagen" width="300" height="150" />
+                    <h2 style="text-align: center;">@Model.Modelo.Codigo</h2>
+                </div>
+                <hr />
+                <div class="row-fluid">
+                    <div class="span6 fichaTecnicaImagenDiv">
+                        <img src="~/Content/@Model.Modelo.URL_Imagen" class="fichaTecnicaImagen" width="300" height="150" />
 
                     </div>
                     <div class="span4">
-                        <h2>@Model.Modelo.Codigo</h2>
-                        <label>@Model.Modelo.Planta</label>
-                        <label>@Model.Modelo.Horma</label>
-                        <label>@Model.Modelo.Color</label>
-                        <label>@Model.Modelo.Pieza</label>
-                        <label>@Model.Modelo.Tipo_Suela</label>
+                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Código:</span> @Model.Modelo.Codigo</label>
+                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Planta:</span> @Model.Modelo.Planta</label>
+                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Horma:</span> @Model.Modelo.Horma</label>
+                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Color:</span> @Model.Modelo.Color</label>
+                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Pieza:</span> @Model.Modelo.Pieza</label>
+                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Numeración:</span> <span class="fichaTecnicaNumeracion">@Model.Modelo.Numeracion.Menor</span> - <span class="fichaTecnicaNumeracion">@Model.Modelo.Numeracion.Mayor</span></label>
+                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Tipo de suela:</span> @Model.Modelo.Tipo_Suela</label>
                     </div>
                 </div>
                 
@@ -35,7 +40,7 @@
     </div>
 </div>
 
-<div class="span4">
+<div class="span3">
     <div class="widget">
         <div class="widget-header">
             <i class="icon-bookmark"></i>

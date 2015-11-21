@@ -10,9 +10,5 @@ namespace CentroCostos.Infrastructure.Repositorios
     public interface IDepartamentoRepository : IRepository<Departamento, int>
     {
         Departamento Find(string nombre);
-        IEnumerable<Costo> GetCostosDirectos(int departamento);
-        IEnumerable<Costo> GetCostosIndirectos(int departamento);
-        IEnumerable<Departamento> GetDepartamentosNoAsignados();
-        IEnumerable<Departamento> FindDepartamentosProduccion();
     }
 }

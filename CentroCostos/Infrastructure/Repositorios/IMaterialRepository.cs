@@ -11,6 +11,6 @@ namespace CentroCostos.Infrastructure.Repositorios
     public interface IMaterialRepository : IRepository<Material, int>
     {
         void CreateMultipleMateriales(IEnumerable<DataRow> data);
-        IOrderedQueryable<Material> FindMateriales();
+        IList<Material> FindMateriales(string query);
     }
 }

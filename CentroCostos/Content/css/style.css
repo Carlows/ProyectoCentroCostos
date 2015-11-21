@@ -1299,5 +1299,32 @@ color: #333;
 
 .pagination a{
     color: #666;
-    background-color: #ddd;
+    background-color:#f9f6f1;
+}
+
+.pagination .active a{
+    background-color:#ddd;
+}
+
+#txtQuery{
+    margin-top:10px;
+    width:542px;
+    height:25px;
+}
+
+.fichaTecnicaImagenDiv{
+    border-right: 1px solid #CCC;
+}
+
+.fichaTecnicaImagen{
+    display:block;
+    margin:auto;
+}
+
+.fichaTecnicaDetalles{
+    font-size: 16px;
+}
+
+.fichaTecnicaTitulo{
+    font-weight:bold;
 }

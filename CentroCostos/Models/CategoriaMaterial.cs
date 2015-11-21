@@ -10,7 +10,7 @@ namespace CentroCostos.Models
     {
         public int Id { get; set; }
 
-        public string Categoria { get; set; }
+        public string NombreCategoria { get; set; }
 
         public virtual IList<Material> Materiales_Categoria { get; set; }
     }

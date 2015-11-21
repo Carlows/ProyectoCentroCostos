@@ -12,7 +12,7 @@ namespace CentroCostos.Infrastructure.Repositorios
     public interface IModeloRepository : IRepository<Modelo, int>
     {
         Modelo Find(string codigo);
-        string UploadImage(string codigo, HttpPostedFileBase imagen, string serverPath);
+        string UploadImageWithUniqueId(string codigo, HttpPostedFileBase imagen, string serverPath);
         void CreateMultipleModelos(IEnumerable<DataRow> rows);
         void CreateMultipleModelos(IEnumerable<DataRow> rows, int lineaId);
     }

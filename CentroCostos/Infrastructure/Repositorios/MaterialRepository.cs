@@ -14,9 +14,12 @@ namespace CentroCostos.Infrastructure.Repositorios
         {
         }
 
-        public IOrderedQueryable<Material> FindMateriales()
+        public IList<Material> FindMateriales(string query)
         {
-            return DbContext.Materiales;
+            if (String.IsNullOrEmpty(query))
+                return DbContext.Materiales.ToList();
+            else
+                return DbContext.Materiales.Where(m => m.Codigo.Contains(query)).ToList();
         }
 
         public void CreateMultipleMateriales(IEnumerable<DataRow> data)
@@ -26,19 +29,12 @@ namespace CentroCostos.Infrastructure.Repositorios
             foreach (DataRow row in data)
             {
                 string nombreCategoria = row["Categoria"].ToString();
-                string nombreDepartamento = row["Departamento"].ToString();
 
-                var categoria = DbContext.Categorias.Where(c => c.Categoria == nombreCategoria).SingleOrDefault();
-                var departamento = DbContext.Departamentos.Where(d => d.Nombre_Departamento == nombreDepartamento).SingleOrDefault();
+                var categoria = DbContext.Categorias.Where(c => c.NombreCategoria == nombreCategoria).SingleOrDefault();
 
                 if (categoria == null)
                 {
                     throw new ArgumentException(String.Format("La categoria {0} no existe", nombreCategoria));
-                    return;
-                }
-                else if (departamento == null)
-                {
-                    throw new ArgumentException(String.Format("El departamento {0} no existe", nombreDepartamento));
                     return;
                 }
 
@@ -49,24 +45,24 @@ namespace CentroCostos.Infrastructure.Repositorios
                         // Especificar medida en la documentación (puede causar confusión)
                         Unidad_Medida = row["Medida"].ToString(),
                         Costo_Unitario = decimal.Parse(row["Costo"].ToString()),
-                        Consumo_Par = decimal.Parse(row["Consumo"].ToString()),
+                        esMaterialDirecto = esMaterialDirecto(row),
                         Categoria_Material = categoria
                     };
-
-                var costoMaterial = new Costo
-                {
-                    esCostoDirecto = true,
-                    Comentario = material.Descripcion_Material,
-                    Descripcion = "Material",
-                    Departamento = departamento
-                };
-
-                material.Costo = costoMaterial;
 
                 materiales.Add(material);
             }
 
             this.CreateMultiple(materiales);
+        }
+
+        private bool esMaterialDirecto(DataRow row)
+        {
+            if (row["Directo"].ToString() == "directo")
+                return true;
+            else if (row["Directo"].ToString() == "indirecto")
+                return false;
+            else
+                throw new ArgumentException("El material debe ser 'directo' o 'indirecto'");
         }
     }
 }

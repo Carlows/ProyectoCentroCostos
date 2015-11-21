@@ -369,13 +369,12 @@ namespace CentroCostos.Controllers
 
         #region Materiales y categorias
         // GET: Materiales
-        [Route("{query}/{page}")]
-        public ActionResult Materiales(string query, int? page)
+        public ActionResult Materiales(int? page, string query)
         {
             int pageNumber = page ?? 1;
             int pageSize = 10;
-
-            var materiales = _materialesDb.FindAll();
+            
+            var materiales = _materialesDb.FindMateriales(query);
 
             var materialesPaginated = materiales.ToPagedList(pageNumber, pageSize);
 
@@ -384,6 +383,8 @@ namespace CentroCostos.Controllers
                 Materiales = materialesPaginated,
                 Categorias = _categoriasDb.FindAll()
             };
+
+            ViewBag.query = query;
 
             return View(model);
         }
@@ -397,13 +398,7 @@ namespace CentroCostos.Controllers
                 .Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
-                    Text = c.Categoria
-                }),
-                Departamentos = _departamentosDb.FindDepartamentosProduccion()
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Nombre_Departamento
+                    Text = c.NombreCategoria
                 })
             };
 
@@ -419,24 +414,15 @@ namespace CentroCostos.Controllers
                 try
                 {
                     var categoriaMaterial = _categoriasDb.GetById(model.CategoriaId);
-                    var departamentoMaterial = _departamentosDb.GetById(model.DepartamentoId);
-                    var costoMaterial = new Costo
-                    {
-                        esCostoDirecto = model.esMaterialDirecto,
-                        Comentario = model.Descripcion_Material,
-                        Descripcion = "Material",
-                        Departamento = departamentoMaterial
-                    };
 
                     var material = new Material
                     {
                         Codigo = model.Codigo,
                         Descripcion_Material = model.Descripcion_Material,
                         Costo_Unitario = model.Costo_Unitario,
-                        Consumo_Par = model.Consumo_Par,
                         Unidad_Medida = model.Unidad_Medida,
-                        Categoria_Material = categoriaMaterial,
-                        Costo = costoMaterial
+                        esMaterialDirecto = model.esMaterialDirecto,
+                        Categoria_Material = categoriaMaterial
                     };
 
                     _materialesDb.Create(material);
@@ -457,15 +443,8 @@ namespace CentroCostos.Controllers
                                 .Select(c => new SelectListItem
                                 {
                                     Value = c.Id.ToString(),
-                                    Text = c.Categoria
+                                    Text = c.NombreCategoria
                                 });
-
-            model.Departamentos = _departamentosDb.FindDepartamentosProduccion()
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Nombre_Departamento
-                });
 
             return View(model);
         }
@@ -489,11 +468,12 @@ namespace CentroCostos.Controllers
                 Descripcion_Material = material.Descripcion_Material,
                 Costo_Unitario = material.Costo_Unitario,
                 Unidad_Medida = material.Unidad_Medida,
+                esMaterialDirecto = material.esMaterialDirecto,
                 Categorias = _categoriasDb.FindAll()
                                 .Select(c => new SelectListItem
                                 {
                                     Value = c.Id.ToString(),
-                                    Text = c.Categoria
+                                    Text = c.NombreCategoria
                                 })
             };
 
@@ -516,7 +496,7 @@ namespace CentroCostos.Controllers
                     material.Unidad_Medida = model.Unidad_Medida;
                     material.Descripcion_Material = model.Descripcion_Material;
                     material.Categoria_Material = categoria;
-                    material.Costo.Descripcion = model.Descripcion_Material;
+                    material.esMaterialDirecto = model.esMaterialDirecto;
 
                     _materialesDb.Update(material);
                     _uow.SaveChanges();
@@ -536,7 +516,7 @@ namespace CentroCostos.Controllers
                                 .Select(c => new SelectListItem
                                 {
                                     Value = c.Id.ToString(),
-                                    Text = c.Categoria
+                                    Text = c.NombreCategoria
                                 });
             return View(model);
         }
@@ -555,7 +535,7 @@ namespace CentroCostos.Controllers
             {
                 CategoriaMaterial categoria = new CategoriaMaterial
                 {
-                    Categoria = model.Categoria
+                    NombreCategoria = model.Categoria
                 };
 
                 try
@@ -591,7 +571,7 @@ namespace CentroCostos.Controllers
             var model = new CategoriaViewModel
             {
                 Id = categoria.Id,
-                Categoria = categoria.Categoria
+                Categoria = categoria.NombreCategoria
             };
 
             return View(model);
@@ -607,7 +587,7 @@ namespace CentroCostos.Controllers
                 {
                     var categoria = _categoriasDb.GetById(model.Id);
 
-                    categoria.Categoria = model.Categoria;
+                    categoria.NombreCategoria = model.Categoria;
 
                     _categoriasDb.Update(categoria);
                     _uow.SaveChanges();
@@ -809,8 +789,7 @@ namespace CentroCostos.Controllers
                 {
                     var departamento = new Departamento
                     {
-                        Nombre_Departamento = model.Nombre_Departamento,
-                        esDeProduccion = model.esDeProduccion
+                        Nombre_Departamento = model.Nombre_Departamento
                     };
 
                     _departamentosDb.Create(departamento);
@@ -844,8 +823,7 @@ namespace CentroCostos.Controllers
             var model = new DepartamentoViewModel
             {
                 Id = departamento.Id,
-                Nombre_Departamento = departamento.Nombre_Departamento,
-                esDeProduccion = departamento.esDeProduccion
+                Nombre_Departamento = departamento.Nombre_Departamento
             };
 
             return View(model);
@@ -862,7 +840,6 @@ namespace CentroCostos.Controllers
                     var departamento = _departamentosDb.GetById(model.Id);
 
                     departamento.Nombre_Departamento = model.Nombre_Departamento;
-                    departamento.esDeProduccion = model.esDeProduccion;
 
                     _departamentosDb.Update(departamento);
                     _uow.SaveChanges();
@@ -899,19 +876,7 @@ namespace CentroCostos.Controllers
         // GET: NuevoCentro
         public ActionResult NuevoCentro()
         {
-            var departamentos = _departamentosDb.GetDepartamentosNoAsignados();
-
-            var model = new CentroCostoViewModel
-            {
-                Departamentos = departamentos
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.Nombre_Departamento
-                })
-            };
-
-            return View(model);
+            return View();
         }
 
         // POST: NuevoCentro
@@ -922,13 +887,10 @@ namespace CentroCostos.Controllers
             {
                 try
                 {
-                    var departamento = _departamentosDb.GetById(model.DepartamentoId);
-
                     var centro = new CentroCosto
                     {
                         Codigo = model.Codigo,
-                        Descripcion = model.Descripcion,
-                        Departamento = departamento
+                        Descripcion = model.Descripcion
                     };
 
                     _centrosDb.Create(centro);
@@ -943,13 +905,6 @@ namespace CentroCostos.Controllers
                     ModelState.AddModelError(String.Empty, "Se produjo un error al intentar agregar el centro de costo");
                 }
             }
-
-            model.Departamentos = _departamentosDb.GetDepartamentosNoAsignados()
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Nombre_Departamento
-                });
 
             return View(model);
         }
@@ -969,14 +924,7 @@ namespace CentroCostos.Controllers
             {
                 Id = centro.Id,
                 Codigo = centro.Codigo,
-                Descripcion = centro.Descripcion,
-                DepartamentoId = centro.Departamento.Id,
-                Departamentos = _departamentosDb.GetDepartamentosNoAsignados()
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.Nombre_Departamento
-                })
+                Descripcion = centro.Descripcion
             };
 
             return View(model);
@@ -991,11 +939,9 @@ namespace CentroCostos.Controllers
                 try
                 {
                     var centro = _centrosDb.GetById(model.Id);
-                    var departamento = _departamentosDb.GetById(model.DepartamentoId);
 
                     centro.Codigo = model.Codigo;
                     centro.Descripcion = model.Descripcion;
-                    centro.Departamento = departamento;
 
                     _centrosDb.Update(centro);
                     _uow.SaveChanges();
@@ -1010,13 +956,6 @@ namespace CentroCostos.Controllers
                 }
             }
 
-            model.Departamentos = _departamentosDb.GetDepartamentosNoAsignados()
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Nombre_Departamento
-                });
-
             return View(model);
         }
         #endregion
@@ -1027,7 +966,7 @@ namespace CentroCostos.Controllers
             if (model.Imagen != null)
             {
                 string serverPath = Server.MapPath("~/Content");
-                return _modelosDb.UploadImage(model.Codigo, model.Imagen, serverPath);
+                return _modelosDb.UploadImageWithUniqueId(model.Codigo, model.Imagen, serverPath);
             }
 
             return null;

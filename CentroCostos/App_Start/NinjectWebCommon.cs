@@ -79,6 +79,7 @@ namespace CentroCostos.App_Start
             kernel.Bind<ICategoriaRepository>().To<CategoriaRepository>();
             kernel.Bind<ICostoRepository>().To<CostoRepository>();
             kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IImageManager>().To<ImageManager>();
         }        
     }
 }
