@@ -126,6 +126,7 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\customstyles.css" />
+    <Content Include="Content\css\datatables.css" />
     <Content Include="Content\css\font-awesome-ie7.css" />
     <Content Include="Content\css\font-awesome-ie7.min.css" />
     <Content Include="Content\css\font-awesome.css" />
@@ -136,7 +137,34 @@
     <Content Include="Content\css\pages\reports.css" />
     <Content Include="Content\css\pages\signin.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\dataTables.bootstrap.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\dataTables.foundation.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\dataTables.foundation.min.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\dataTables.jqueryui.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\jquery.dataTables.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\jquery.dataTables.min.css" />
+    <Content Include="Content\css\DataTables-1.10.10\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\css\DataTables-1.10.10\images\sort_asc.png" />
+    <Content Include="Content\css\DataTables-1.10.10\images\sort_asc_disabled.png" />
+    <Content Include="Content\css\DataTables-1.10.10\images\sort_both.png" />
+    <Content Include="Content\css\DataTables-1.10.10\images\sort_desc.png" />
+    <Content Include="Content\css\DataTables-1.10.10\images\sort_desc_disabled.png" />
+    <Content Include="Content\css\DataTables-1.10.10\js\dataTables.bootstrap.js" />
+    <Content Include="Content\css\DataTables-1.10.10\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\css\DataTables-1.10.10\js\dataTables.foundation.js" />
+    <Content Include="Content\css\DataTables-1.10.10\js\dataTables.foundation.min.js" />
+    <Content Include="Content\css\DataTables-1.10.10\js\dataTables.jqueryui.js" />
+    <Content Include="Content\css\DataTables-1.10.10\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\css\DataTables-1.10.10\js\jquery.dataTables.js" />
+    <Content Include="Content\css\DataTables-1.10.10\js\jquery.dataTables.min.js" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\images\sort_asc.png" />
+    <Content Include="Content\images\sort_asc_disabled.png" />
+    <Content Include="Content\images\sort_both.png" />
+    <Content Include="Content\images\sort_desc.png" />
+    <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="Content\img\body-bg.png" />
     <Content Include="Content\img\glyphicons-halflings-white.html" />
     <Content Include="Content\img\glyphicons-halflings.html" />
@@ -153,6 +181,7 @@
     <Content Include="fonts\fontgoogleapi.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\js\datatables.js" />
     <Content Include="Scripts\js\base.js" />
     <Content Include="Scripts\js\bootstrap.js" />
     <Content Include="Scripts\js\chart.min.js" />
@@ -168,7 +197,9 @@
     <Content Include="Scripts\js\guidely\guidely-number.png" />
     <Content Include="Scripts\js\guidely\guidely.css" />
     <Content Include="Scripts\js\guidely\guidely.min.js" />
+    <Content Include="Scripts\js\jquery-1.11.3.min.js" />
     <Content Include="Scripts\js\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\js\jquery-migrate-1.2.1.min.js" />
     <Content Include="Scripts\js\signin.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -216,85 +247,37 @@
     <Compile Include="Infrastructure\Services\IUserService.cs" />
     <Compile Include="Infrastructure\Services\UserService.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201507042112249_InitialMigration.cs" />
-    <Compile Include="Migrations\201507042112249_InitialMigration.Designer.cs">
-      <DependentUpon>201507042112249_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201511222128506_InitialMigration.cs" />
+    <Compile Include="Migrations\201511222128506_InitialMigration.Designer.cs">
+      <DependentUpon>201511222128506_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507050112161_SecondMigration.cs" />
-    <Compile Include="Migrations\201507050112161_SecondMigration.Designer.cs">
-      <DependentUpon>201507050112161_SecondMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201511222131529_DepartamentoProduccion.cs" />
+    <Compile Include="Migrations\201511222131529_DepartamentoProduccion.Designer.cs">
+      <DependentUpon>201511222131529_DepartamentoProduccion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507061922272_ThirdMigration.cs" />
-    <Compile Include="Migrations\201507061922272_ThirdMigration.Designer.cs">
-      <DependentUpon>201507061922272_ThirdMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201511230418339_CambiosFichasTecnicas.cs" />
+    <Compile Include="Migrations\201511230418339_CambiosFichasTecnicas.Designer.cs">
+      <DependentUpon>201511230418339_CambiosFichasTecnicas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507102325546_Modelo_Fecha_Modificacion.cs" />
-    <Compile Include="Migrations\201507102325546_Modelo_Fecha_Modificacion.Designer.cs">
-      <DependentUpon>201507102325546_Modelo_Fecha_Modificacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507120155223_CorreccionMaterialModelo.cs" />
-    <Compile Include="Migrations\201507120155223_CorreccionMaterialModelo.Designer.cs">
-      <DependentUpon>201507120155223_CorreccionMaterialModelo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507161854419_Pieza_Int.cs" />
-    <Compile Include="Migrations\201507161854419_Pieza_Int.Designer.cs">
-      <DependentUpon>201507161854419_Pieza_Int.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507161900057_Pieza_Int1.cs" />
-    <Compile Include="Migrations\201507161900057_Pieza_Int1.Designer.cs">
-      <DependentUpon>201507161900057_Pieza_Int1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507172048486_ExtendidoDepartamento_EsProduccion.cs" />
-    <Compile Include="Migrations\201507172048486_ExtendidoDepartamento_EsProduccion.Designer.cs">
-      <DependentUpon>201507172048486_ExtendidoDepartamento_EsProduccion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507192358010_CC.cs" />
-    <Compile Include="Migrations\201507192358010_CC.Designer.cs">
-      <DependentUpon>201507192358010_CC.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507220150582_Decimales.cs" />
-    <Compile Include="Migrations\201507220150582_Decimales.Designer.cs">
-      <DependentUpon>201507220150582_Decimales.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507220157024_Decimales2.cs" />
-    <Compile Include="Migrations\201507220157024_Decimales2.Designer.cs">
-      <DependentUpon>201507220157024_Decimales2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507220159348_Decimales3.cs" />
-    <Compile Include="Migrations\201507220159348_Decimales3.Designer.cs">
-      <DependentUpon>201507220159348_Decimales3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507220350198_test2.cs" />
-    <Compile Include="Migrations\201507220350198_test2.Designer.cs">
-      <DependentUpon>201507220350198_test2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201509182231365_UserAuth2.cs" />
-    <Compile Include="Migrations\201509182231365_UserAuth2.Designer.cs">
-      <DependentUpon>201509182231365_UserAuth2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511061909521_AddedCategoryEntity.cs" />
-    <Compile Include="Migrations\201511061909521_AddedCategoryEntity.Designer.cs">
-      <DependentUpon>201511061909521_AddedCategoryEntity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511212305150_esMaterialDirecto.cs" />
-    <Compile Include="Migrations\201511212305150_esMaterialDirecto.Designer.cs">
-      <DependentUpon>201511212305150_esMaterialDirecto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511212324107_CostoEliminadoDeMaterial.cs" />
-    <Compile Include="Migrations\201511212324107_CostoEliminadoDeMaterial.Designer.cs">
-      <DependentUpon>201511212324107_CostoEliminadoDeMaterial.cs</DependentUpon>
+    <Compile Include="Migrations\201511231914497_FichaTecnica.cs" />
+    <Compile Include="Migrations\201511231914497_FichaTecnica.Designer.cs">
+      <DependentUpon>201511231914497_FichaTecnica.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoriaMaterial.cs" />
     <Compile Include="Models\CentroCosto.cs" />
     <Compile Include="Models\Costo.cs" />
-    <Compile Include="Models\Departamento.cs" />
+    <Compile Include="Models\CostoMaterial.cs" />
+    <Compile Include="Models\DepartamentoProduccion.cs" />
+    <Compile Include="Models\FichaTecnica.cs" />
     <Compile Include="Models\Linea.cs" />
     <Compile Include="Models\Material.cs" />
+    <Compile Include="Models\MaterialesDepartamentoProduccion.cs" />
     <Compile Include="Models\Modelo.cs" />
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\UnidadCosto.cs" />
     <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\ViewModels\AgregarMaterialesViewModel.cs" />
     <Compile Include="Models\ViewModels\CategoriaViewModel.cs" />
     <Compile Include="Models\ViewModels\CentroCostoViewModel.cs" />
     <Compile Include="Models\ViewModels\CentrosCostoAdmViewModel.cs" />
@@ -368,6 +351,7 @@
     <Content Include="Views\LineaProduccion\Index.cshtml" />
     <Content Include="Views\Administracion\ImportarModelosLinea.cshtml" />
     <Content Include="Views\Administracion\ImportarMateriales.cshtml" />
+    <Content Include="Views\LineaProduccion\AgregarMaterialDepartamento.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -380,56 +364,17 @@
     <Folder Include="ExcelTemp\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507042112249_InitialMigration.resx">
-      <DependentUpon>201507042112249_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511222128506_InitialMigration.resx">
+      <DependentUpon>201511222128506_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507050112161_SecondMigration.resx">
-      <DependentUpon>201507050112161_SecondMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511222131529_DepartamentoProduccion.resx">
+      <DependentUpon>201511222131529_DepartamentoProduccion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507061922272_ThirdMigration.resx">
-      <DependentUpon>201507061922272_ThirdMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511230418339_CambiosFichasTecnicas.resx">
+      <DependentUpon>201511230418339_CambiosFichasTecnicas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507102325546_Modelo_Fecha_Modificacion.resx">
-      <DependentUpon>201507102325546_Modelo_Fecha_Modificacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507120155223_CorreccionMaterialModelo.resx">
-      <DependentUpon>201507120155223_CorreccionMaterialModelo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507161854419_Pieza_Int.resx">
-      <DependentUpon>201507161854419_Pieza_Int.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507161900057_Pieza_Int1.resx">
-      <DependentUpon>201507161900057_Pieza_Int1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507172048486_ExtendidoDepartamento_EsProduccion.resx">
-      <DependentUpon>201507172048486_ExtendidoDepartamento_EsProduccion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507192358010_CC.resx">
-      <DependentUpon>201507192358010_CC.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507220150582_Decimales.resx">
-      <DependentUpon>201507220150582_Decimales.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507220157024_Decimales2.resx">
-      <DependentUpon>201507220157024_Decimales2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507220159348_Decimales3.resx">
-      <DependentUpon>201507220159348_Decimales3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507220350198_test2.resx">
-      <DependentUpon>201507220350198_test2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201509182231365_UserAuth2.resx">
-      <DependentUpon>201509182231365_UserAuth2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511061909521_AddedCategoryEntity.resx">
-      <DependentUpon>201511061909521_AddedCategoryEntity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511212305150_esMaterialDirecto.resx">
-      <DependentUpon>201511212305150_esMaterialDirecto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511212324107_CostoEliminadoDeMaterial.resx">
-      <DependentUpon>201511212324107_CostoEliminadoDeMaterial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511231914497_FichaTecnica.resx">
+      <DependentUpon>201511231914497_FichaTecnica.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

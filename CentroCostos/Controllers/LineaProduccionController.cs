@@ -16,12 +16,14 @@ namespace CentroCostos.Controllers
         private readonly IUnitOfWork _uow;
         private readonly ILineaRepository _lineasDb;
         private readonly IModeloRepository _modelosDb;
+        private readonly IMaterialRepository _materialesDb;
 
-        public LineaProduccionController(IUnitOfWork uow, ILineaRepository lineasRepository, IModeloRepository modelosRepository)
+        public LineaProduccionController(IUnitOfWork uow, ILineaRepository lineasRepository, IModeloRepository modelosRepository, IMaterialRepository materialesRepository)
         {
             _uow = uow;
             _lineasDb = lineasRepository;
             _modelosDb = modelosRepository;
+            _materialesDb = materialesRepository;
         }
 
         // GET: LineaProduccion
@@ -33,17 +35,27 @@ namespace CentroCostos.Controllers
             newModel.LineaID = model.LineaID;
             newModel.ModeloID = model.ModeloID;
 
-            if (model.ModeloID == null && model.LineaID != null)
+            if (isOnlyLineaSelected(model))
             {
                 newModel.ModelosLinea = ObtenerModelos(model);
             }
-            else if(model.ModeloID != null)
+            else if (isModelSelected(model))
             {
                 newModel.ModelosLinea = ObtenerModelos(model);
                 newModel.Modelo = _modelosDb.GetById((int)model.ModeloID);
             }
 
             return View(newModel);
+        }
+
+        private bool isModelSelected(LineaIndexViewModel model)
+        {
+            return model.ModeloID != null;
+        }
+
+        private bool isOnlyLineaSelected(LineaIndexViewModel model)
+        {
+            return model.ModeloID == null && model.LineaID != null;
         }
 
         private IList<SelectListItem> ObtenerModelos(LineaIndexViewModel model)
@@ -54,6 +66,31 @@ namespace CentroCostos.Controllers
                     Text = m.Codigo,
                     Value = m.Id.ToString()
                 }).ToList();
+        }
+
+        public ActionResult AgregarMaterialDepartamento(int id, int departamentoId)
+        {
+            try
+            {
+                var modelo = _modelosDb.GetById(id);
+                var departamentoMateriales = modelo.Ficha.MaterialesDepartamento.Where(d => d.Id == departamentoId).Single().Materiales;
+                var materiales = _materialesDb.FindAll();
+
+                var model = new AgregarMaterialesViewModel()
+                {
+                    materialesAgregados = departamentoMateriales,
+                    listaMateriales = materiales
+                };
+
+                return View(model);
+            }
+            catch(Exception e)
+            {
+                // log here
+
+                TempData["message"] = "Hubo un error al encontrar la información";
+                return View("Index");
+            }
         }
     }
 }

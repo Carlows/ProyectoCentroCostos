@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CentroCostos.Infrastructure.Repositorios
 {
-    public interface IDepartamentoRepository : IRepository<Departamento, int>
+    public interface IDepartamentoRepository : IRepository<DepartamentoProduccion, int>
     {
-        Departamento Find(string nombre);
+        DepartamentoProduccion Find(string nombre);
     }
 }

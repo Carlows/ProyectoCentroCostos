@@ -189,23 +189,7 @@ namespace CentroCostos.Controllers
             {
                 try
                 {
-                    var linea = _lineasDb.GetById(model.IdLinea);
-
-                    var modeloNuevo = new Modelo
-                    {
-                        Codigo = model.Codigo,
-                        Horma = model.Horma,
-                        Planta = model.Planta,
-                        Tipo_Suela = model.Tipo_Suela,
-                        Numeracion = model.Numeracion,
-                        Pieza = model.Pieza,
-                        Color = model.Color,
-                        Linea = linea
-                    };
-
-                    modeloNuevo.URL_Imagen = CheckAndUploadImage(model);
-
-                    _modelosDb.Create(modeloNuevo);
+                    _modelosDb.CreateSingleModelo(model, serverPath);
                     _uow.SaveChanges();
 
                     TempData["message"] = "El modelo fue creado correctamente";
@@ -223,7 +207,7 @@ namespace CentroCostos.Controllers
                 return View(model);
             }
         }
-
+        
         // GET: EditarModelo
         public ActionResult EditarModelo(int idLinea, int id)
         {
@@ -787,7 +771,7 @@ namespace CentroCostos.Controllers
             {
                 try
                 {
-                    var departamento = new Departamento
+                    var departamento = new DepartamentoProduccion
                     {
                         Nombre_Departamento = model.Nombre_Departamento
                     };
@@ -961,15 +945,23 @@ namespace CentroCostos.Controllers
         #endregion
 
         #region HelperMethods
+
         private string CheckAndUploadImage(NuevoModeloViewModel model)
         {
             if (model.Imagen != null)
             {
-                string serverPath = Server.MapPath("~/Content");
                 return _modelosDb.UploadImageWithUniqueId(model.Codigo, model.Imagen, serverPath);
             }
 
             return null;
+        }
+
+        private string serverPath
+        {
+            get
+            {
+                return Server.MapPath("~/Content");
+            }
         }
 
         // Returns the path to the uploaded file

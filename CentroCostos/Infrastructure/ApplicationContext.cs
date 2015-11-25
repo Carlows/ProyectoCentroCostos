@@ -21,16 +21,18 @@ namespace CentroCostos.Infrastructure
         public DbSet<CentroCosto> CentrosDeCostos { get; set; }
         public DbSet<Material> Materiales { get; set; }
         public DbSet<Costo> Costos { get; set; }
-        public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<DepartamentoProduccion> Departamentos { get; set; }
         public DbSet<Orden> OrdenesProducidas { get; set; }
         public DbSet<UnidadCosto> CostosGenerados { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<CategoriaMaterial> Categorias { get; set; }
+        public DbSet<FichaTecnica> FichaTecnica { get; set; }
+        public DbSet<MaterialesDepartamentoProduccion> MaterialesDepartamento { get; set; }
+        public DbSet<CostoMaterial> CostoMaterial { get; set; }
 
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Material>().Property(m => m.Costo_Unitario).HasPrecision(28, 12);
-            modelBuilder.Entity<Material>().Property(m => m.Consumo_Par).HasPrecision(28, 12);
 
             base.OnModelCreating(modelBuilder);
         }

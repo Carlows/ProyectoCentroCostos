@@ -16,8 +16,5 @@ namespace CentroCostos.Models
 
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
-        
-        [Required]
-        public virtual Departamento Departamento { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace CentroCostos.Models
     [Table("Material")]
     public partial class Material
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string Codigo { get; set; }
@@ -19,12 +20,7 @@ namespace CentroCostos.Models
         public bool esMaterialDirecto { get; set; }
 
         public decimal Costo_Unitario { get; set; }
-
-        // Este consumo se debe añadir cuando el material se asigna a un modelo especifico
-        // so wtf are you going to do with this
-        // tal vez una entidad nueva: Consumo_Modelo_Material
-        public decimal Consumo_Par { get; set; }
-
+        
         [Required]
         public virtual CategoriaMaterial Categoria_Material { get; set; }
     }

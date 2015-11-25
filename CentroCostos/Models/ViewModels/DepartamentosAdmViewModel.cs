@@ -7,6 +7,6 @@ namespace CentroCostos.Models.ViewModels
 {
     public class DepartamentosAdmViewModel
     {
-        public IList<Departamento> Departamentos { get; set; }
+        public IList<DepartamentoProduccion> Departamentos { get; set; }
     }
 }

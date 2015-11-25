@@ -36,7 +36,8 @@ namespace CentroCostos.Models
         [Required]
         public virtual Linea Linea { get; set; }
 
-        public IEnumerable<Material> Materiales_Produccion { get; set; }
+        [Required]
+        public virtual FichaTecnica Ficha { get; set; }
     }
 
     public class Numeracion

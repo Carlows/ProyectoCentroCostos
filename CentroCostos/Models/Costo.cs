@@ -18,7 +18,7 @@ namespace CentroCostos.Models
         public string Descripcion { get; set; }
         public string Comentario { get; set; }
         
-        public virtual Departamento Departamento { get; set; }
+        public virtual DepartamentoProduccion Departamento { get; set; }
         // Solo se asignará si este costo es directo y por materia prima
         public virtual Material Material_Directo { get; set; }
     }
