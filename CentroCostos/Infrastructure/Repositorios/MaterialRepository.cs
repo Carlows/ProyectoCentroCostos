@@ -14,6 +14,11 @@ namespace CentroCostos.Infrastructure.Repositorios
         {
         }
 
+        public Material Find(string material)
+        {
+            return DbContext.Materiales.Where(l => l.Codigo.Equals(material)).Single();
+        }
+
         public IList<Material> FindMateriales(string query)
         {
             if (String.IsNullOrEmpty(query))
@@ -43,9 +48,9 @@ namespace CentroCostos.Infrastructure.Repositorios
                         Codigo = row["Codigo"].ToString(),
                         Descripcion_Material = row["Descripcion"].ToString(),
                         // Especificar medida en la documentación (puede causar confusión)
-                        Unidad_Medida = row["Medida"].ToString(),
+                        Unidad_Medida = row["Unidad"].ToString(),
                         Costo_Unitario = decimal.Parse(row["Costo"].ToString()),
-                        esMaterialDirecto = esMaterialDirecto(row),
+                        esMaterialDirecto = true,
                         Categoria_Material = categoria
                     };
 
@@ -53,16 +58,6 @@ namespace CentroCostos.Infrastructure.Repositorios
             }
 
             this.CreateMultiple(materiales);
-        }
-
-        private bool esMaterialDirecto(DataRow row)
-        {
-            if (row["Directo"].ToString() == "directo")
-                return true;
-            else if (row["Directo"].ToString() == "indirecto")
-                return false;
-            else
-                throw new ArgumentException("El material debe ser 'directo' o 'indirecto'");
         }
     }
 }

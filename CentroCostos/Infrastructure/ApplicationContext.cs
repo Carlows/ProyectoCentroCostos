@@ -32,7 +32,7 @@ namespace CentroCostos.Infrastructure
 
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Material>().Property(m => m.Costo_Unitario).HasPrecision(28, 12);
+            modelBuilder.Entity<Material>().Property(m => m.Costo_Unitario).HasPrecision(28, 2);
 
             base.OnModelCreating(modelBuilder);
         }

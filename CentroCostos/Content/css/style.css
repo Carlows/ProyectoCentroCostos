@@ -1328,3 +1328,7 @@ color: #333;
 .fichaTecnicaTitulo{
     font-weight:bold;
 }
+
+.btnMaterial{
+    text-align: right;
+}

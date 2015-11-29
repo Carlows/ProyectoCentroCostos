@@ -1,5 +1,6 @@
 ﻿using CentroCostos.Helpers;
 using CentroCostos.Models;
+using CentroCostos.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,14 +14,16 @@ namespace CentroCostos.Infrastructure.Repositorios
     {
         private IImageManager _imageManager;
 
-        public ModeloRepository(ApplicationContext dbContext, ILineaRepository lineasRepo, IImageManager imageManager)
+        public ModeloRepository(ApplicationContext dbContext, ILineaRepository lineasRepo, IDepartamentoRepository depsRepo, IImageManager imageManager)
             : base(dbContext)
         {
             _lineasDb = lineasRepo;
             _imageManager = imageManager;
+            _departamentosDb = depsRepo;
         }
 
         private readonly ILineaRepository _lineasDb;
+        private readonly IDepartamentoRepository _departamentosDb;
 
         public Modelo Find(string codigo)
         {
@@ -114,6 +117,62 @@ namespace CentroCostos.Infrastructure.Repositorios
 
                 this.CreateMultiple(modelos);
             }
+        }
+
+        public void CreateSingleModelo(NuevoModeloViewModel model, string serverPath)
+        {
+            var linea = _lineasDb.GetById(model.IdLinea);
+
+            var modeloNuevo = new Modelo
+            {
+                Codigo = model.Codigo,
+                Horma = model.Horma,
+                Planta = model.Planta,
+                Tipo_Suela = model.Tipo_Suela,
+                Numeracion = model.Numeracion,
+                Pieza = model.Pieza,
+                Color = model.Color,
+                Linea = linea
+            };
+
+            modeloNuevo.URL_Imagen = CheckAndUploadImage(model, serverPath);
+
+            modeloNuevo.Ficha = CrearFichaTecnicaVacia();
+
+            this.Create(modeloNuevo);
+        }
+
+        private FichaTecnica CrearFichaTecnicaVacia()
+        {
+            FichaTecnica ficha = new FichaTecnica();
+            var departamentos = _departamentosDb.FindAll();
+            ficha.MaterialesDepartamento = InicializarFichaVaciaConDepartamentos(departamentos);
+
+            return ficha;
+        }
+
+        private string CheckAndUploadImage(NuevoModeloViewModel model, string serverPath)
+        {
+            if (model.Imagen != null)
+            {
+                return UploadImageWithUniqueId(model.Codigo, model.Imagen, serverPath);
+            }
+
+            return null;
+        }
+
+        private List<MaterialesDepartamentoProduccion> InicializarFichaVaciaConDepartamentos(IList<DepartamentoProduccion> departamentos)
+        {
+            List<MaterialesDepartamentoProduccion> materialesDepartamentos = new List<MaterialesDepartamentoProduccion>();
+            foreach (DepartamentoProduccion departamento in departamentos)
+            {
+                MaterialesDepartamentoProduccion departamentoMaterialVacio = new MaterialesDepartamentoProduccion();
+                departamentoMaterialVacio.Departamento = departamento;
+
+                materialesDepartamentos.Add(departamentoMaterialVacio);
+            }
+
+            return materialesDepartamentos;
         }
     }
 }

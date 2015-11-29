@@ -1,75 +1,125 @@
 ﻿@model CentroCostos.Models.ViewModels.LineaIndexViewModel
+@using CentroCostos.Models
 
-<div class="span8 clearmarginleft">
-    <div class="widget">
-        <div class="widget-header">
-            <i class="icon-bookmark"></i>
-            <h3>Ficha Técnica</h3>
-        </div>
-        <!-- /widget-header -->
-        <div class="widget-content">
-            @if (Model.Modelo == null)
-            {
-                <div class="alert alert-link">Selecciona un modelo</div>
-            }
-            else
-            {
-                <div class="row-fluid">
-                    <h2 style="text-align: center;">@Model.Modelo.Codigo</h2>
-                </div>
-                <hr />
-                <div class="row-fluid">
-                    <div class="span6 fichaTecnicaImagenDiv">
-                        <img src="~/Content/@Model.Modelo.URL_Imagen" class="fichaTecnicaImagen" width="300" height="150" />
+<div class="row-fluid">
+    <div class="span8 clearmarginleft">
+        <div class="widget">
+            <div class="widget-header">
+                <i class="icon-bookmark"></i>
+                <h3>Ficha Técnica</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+                @if (Model.Modelo == null)
+                {
+                    <div class="alert alert-link">Selecciona un modelo</div>
+                }
+                else
+                {
+                    <div class="row-fluid">
+                        <h2 style="text-align: center;">@Model.Modelo.Codigo</h2>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span6 fichaTecnicaImagenDiv">
+                            <img src="~/Content/@Model.Modelo.URL_Imagen" class="fichaTecnicaImagen" width="300" height="150" />
 
+                        </div>
+                        <div class="span4">
+                            <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Código:</span> @Model.Modelo.Codigo</label>
+                            <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Planta:</span> @Model.Modelo.Planta</label>
+                            <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Horma:</span> @Model.Modelo.Horma</label>
+                            <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Color:</span> @Model.Modelo.Color</label>
+                            <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Pieza:</span> @Model.Modelo.Pieza</label>
+                            <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Numeración:</span> <span class="fichaTecnicaNumeracion">@Model.Modelo.Numeracion.Menor</span> - <span class="fichaTecnicaNumeracion">@Model.Modelo.Numeracion.Mayor</span></label>
+                            <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Tipo de suela:</span> @Model.Modelo.Tipo_Suela</label>
+                        </div>
                     </div>
-                    <div class="span4">
-                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Código:</span> @Model.Modelo.Codigo</label>
-                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Planta:</span> @Model.Modelo.Planta</label>
-                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Horma:</span> @Model.Modelo.Horma</label>
-                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Color:</span> @Model.Modelo.Color</label>
-                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Pieza:</span> @Model.Modelo.Pieza</label>
-                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Numeración:</span> <span class="fichaTecnicaNumeracion">@Model.Modelo.Numeracion.Menor</span> - <span class="fichaTecnicaNumeracion">@Model.Modelo.Numeracion.Mayor</span></label>
-                        <label class="fichaTecnicaDetalles"><span class="fichaTecnicaTitulo">Tipo de suela:</span> @Model.Modelo.Tipo_Suela</label>
-                    </div>
-                </div>
-                
-            }
+
+                }
+            </div>
+            <!-- /widget-content -->
         </div>
-        <!-- /widget-content -->
+    </div>
+
+    <div class="span3">
+        <div class="widget">
+            <div class="widget-header">
+                <i class="icon-bookmark"></i>
+                <h3>Selecciona un modelo</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+                @using (Html.BeginForm("Index",
+                        "LineaProduccion",
+                        FormMethod.Get))
+                {
+                    <div class="control-group">
+                        <label class="control-label">Lineas</label>
+                        <div class="controls">
+                            @Html.DropDownListFor(m => m.LineaID, Model.Lineas, "Selecciona una linea", new { onchange = "this.form.submit()" })
+                        </div> <!-- /controls -->
+                    </div>
+                    if (Model.LineaID != null)
+                    {
+                        <div class="control-group">
+                            <label class="control-label">Modelos</label>
+                            <div class="controls">
+                                @Html.DropDownListFor(m => m.ModeloID, Model.ModelosLinea, "Selecciona un modelo", new { onchange = "this.form.submit()" })
+                            </div> <!-- /controls -->
+                        </div>
+                    }
+
+                }
+            </div>
+            <!-- /widget-content -->
+        </div>
     </div>
 </div>
 
-<div class="span3">
-    <div class="widget">
-        <div class="widget-header">
-            <i class="icon-bookmark"></i>
-            <h3>Selecciona un modelo</h3>
-        </div>
-        <!-- /widget-header -->
-        <div class="widget-content">
-            @using (Html.BeginForm("Index",
-                        "LineaProduccion",
-                        FormMethod.Get))
+<div class="row-fluid">
+    <div class="span8">
+        @if (Model.Modelo != null)
+        {
+            foreach (MaterialesDepartamentoProduccion departamento in Model.Modelo.Ficha.MaterialesDepartamento)
             {
-                <div class="control-group">
-                    <label class="control-label">Lineas</label>
-                    <div class="controls">
-                        @Html.DropDownListFor(m => m.LineaID, Model.Lineas, "Selecciona una linea", new { onchange = "this.form.submit()" })
-                    </div> <!-- /controls -->
-                </div>
-                if (Model.LineaID != null)
-                {
-                    <div class="control-group">
-                        <label class="control-label">Modelos</label>
-                        <div class="controls">
-                            @Html.DropDownListFor(m => m.ModeloID, Model.ModelosLinea, "Selecciona un modelo", new { onchange = "this.form.submit()" })
-                        </div> <!-- /controls -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>@departamento.Departamento.Nombre_Departamento</h3>
                     </div>
-                }
+                    <div class="widget-content">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Código Producto</th>
+                                    <th>Descripción</th>
+                                    <th>Unidad Medida</th>
+                                    <th>Cons/Par</th>
+                                    <th>Costo Unitario</th>
+                                    <th>Costo Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(CostoMaterial m in departamento.Materiales)
+                                {
+                                <tr>
+                                    <td>@m.Material.Codigo</td>
+                                    <td>@m.Material.Descripcion_Material</td>
+                                    <td>@m.Material.Unidad_Medida</td>
+                                    <td>@m.Consumo_Par</td>
+                                    <td>@m.Material.Costo_Unitario</td>
+                                    <td>@m.Costo_Total</td>
+                                    <td><a class="btn btn-danger" href="@Url.Action("EliminarCostoMaterial", "LineaProduccion", new { id = m.Id })">Eliminar</a></td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
 
+                        <a href="@Url.Action("AgregarMaterialDepartamento", "LineaProduccion", new { id = Model.ModeloID, departamentoId = departamento.Id })" class="btn btn-success">Agregar material</a>
+                    </div>
+                </div>
             }
-        </div>
-        <!-- /widget-content -->
+        }
     </div>
 </div>

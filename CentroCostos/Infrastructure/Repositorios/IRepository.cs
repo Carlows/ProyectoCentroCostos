@@ -13,5 +13,6 @@ namespace CentroCostos.Infrastructure.Repositorios
         T GetById(K id);
         void Update(T entity);
         IList<T> FindAll();
+        void Delete(T entity);
     }
 }

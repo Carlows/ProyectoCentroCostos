@@ -227,19 +227,23 @@
     <Compile Include="Infrastructure\Repositorios\BaseRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\CategoriaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\CentroCostoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\CostoMaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\CostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\DepartamentoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICategoriaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICentroCostoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\ICostoMaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IDepartamentoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ILineaRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\IMaterialesDepartamentoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IMaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IModeloRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IOrdenRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IUnidadCostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\LineaRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\MaterialesDepartamentoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\MaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ModeloRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\OrdenRepository.cs" />
@@ -263,11 +267,20 @@
     <Compile Include="Migrations\201511231914497_FichaTecnica.Designer.cs">
       <DependentUpon>201511231914497_FichaTecnica.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511282124467_MaterialesA2Digitos.cs" />
+    <Compile Include="Migrations\201511282124467_MaterialesA2Digitos.Designer.cs">
+      <DependentUpon>201511282124467_MaterialesA2Digitos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511282307541_changes.cs" />
+    <Compile Include="Migrations\201511282307541_changes.Designer.cs">
+      <DependentUpon>201511282307541_changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoriaMaterial.cs" />
     <Compile Include="Models\CentroCosto.cs" />
     <Compile Include="Models\Costo.cs" />
     <Compile Include="Models\CostoMaterial.cs" />
+    <Compile Include="Models\CostoMaterialExt.cs" />
     <Compile Include="Models\DepartamentoProduccion.cs" />
     <Compile Include="Models\FichaTecnica.cs" />
     <Compile Include="Models\Linea.cs" />
@@ -277,6 +290,7 @@
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\UnidadCosto.cs" />
     <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\ViewModels\AgregarMaterialDepartamentoViewModel.cs" />
     <Compile Include="Models\ViewModels\AgregarMaterialesViewModel.cs" />
     <Compile Include="Models\ViewModels\CategoriaViewModel.cs" />
     <Compile Include="Models\ViewModels\CentroCostoViewModel.cs" />
@@ -352,6 +366,7 @@
     <Content Include="Views\Administracion\ImportarModelosLinea.cshtml" />
     <Content Include="Views\Administracion\ImportarMateriales.cshtml" />
     <Content Include="Views\LineaProduccion\AgregarMaterialDepartamento.cshtml" />
+    <Content Include="Views\LineaProduccion\EliminarCostoMaterial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -375,6 +390,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511231914497_FichaTecnica.resx">
       <DependentUpon>201511231914497_FichaTecnica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511282124467_MaterialesA2Digitos.resx">
+      <DependentUpon>201511282124467_MaterialesA2Digitos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511282307541_changes.resx">
+      <DependentUpon>201511282307541_changes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,162 @@
+﻿@model CentroCostos.Models.ViewModels.AgregarMaterialesViewModel
+@using CentroCostos.Models
+
+@section customPageStyles{
+    <link href="~/Content/css/datatables.css" type="text/css" rel="stylesheet" />
+}
+
+<table id="dataTable" width="100%" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Costo Unitario</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Material m in Model.listaMateriales)
+        { 
+        <tr>
+            <td>@m.Codigo</td>
+            <td>@m.Descripcion_Material</td>
+            <td>@m.Costo_Unitario</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<a href="#modalForm" id="dialogBtn" class="btn btn-success" data-toggle="modal">Agregar Material seleccionado</a>
+
+<div id="modalForm" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Agregar material</h3>
+    </div>
+    <div class="modal-body">
+        <div id="modalMsg" class="alert">El material fué agregado correctamente</div>
+        <form id="materialForm" class="form-horizontal">            
+            <input type="hidden" value="@ViewBag.departamentoMaterialId" id="departamentoMaterialId" />
+
+            <div class="control-group">
+                <label class="control-label" for="firstname">Código</label>
+                <div class="controls">
+                    <input type="text" disabled id="materialCodigo" />
+                </div> <!-- /controls -->
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="firstname">Costo unitario</label>
+                <div class="controls">
+                    <input type="text" disabled id="materialCostoUnitario" />
+                </div> <!-- /controls -->
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="firstname">Consumo/Par</label>
+                <div class="controls">
+                    <input type="text" value="0" id="materialConsumo" />
+                </div> <!-- /controls -->
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="firstname">Costo Total</label>
+                <div class="controls">
+                    <input type="text" disabled id="materialCostoTotal" />
+                </div> <!-- /controls -->
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn">Cancelar</a>
+        <button id="guardarMaterialBtn" class="btn btn-primary">Guardar Material</button>
+    </div>
+</div>
+
+
+
+@section customPageScripts{
+    <script type="text/javascript" src="~/Scripts/js/datatables.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#modalMsg").hide();
+
+            var table = $("#dataTable").DataTable({   
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_",
+                    "zeroRecords": "No se encontró ningun material",
+                    "info": "Mostrando página _PAGE_ of _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:"
+                }
+            });
+            
+            $('#dataTable tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            $('#dialogBtn').click(function () {
+                // index [0] contiene el item que seleccionamos
+                var data = table.rows('.selected').data()[0];
+
+                fillFormWithData(data);
+            });
+
+            var fillFormWithData = function (data) {
+                resetValues();
+                $("#materialCodigo").val(data[0]);
+                $("#materialCostoUnitario").val(data[2]);
+            };
+
+            var resetValues = function () {
+                $("#materialCodigo").val("");
+                $("#materialCostoUnitario").val("0");
+                $("#materialConsumo").val("0");
+                $("#materialCostoTotal").val("0");
+            };
+
+            $('#materialConsumo').on('input propertychange paste', function () {
+                var costoUnitario = $("#materialCostoUnitario").val();
+                var consumo = $(this).val();
+                $("#materialCostoTotal").val(costoUnitario * consumo);
+            });
+
+            $("#guardarMaterialBtn").click(function () {
+                var departamentoMatId = $("#departamentoMaterialId").val();
+                var codigo = $("#materialCodigo").val();
+                var consumo = $("#materialConsumo").val();
+
+                var data = {
+                    departamentoId: departamentoMatId,
+                    codigoMaterial: codigo,
+                    consumoMaterial: consumo
+                };
+
+                $.post("@Url.Action("AgregarMaterialDepartamentoAJAX", "LineaProduccion")", data)
+                .done(function (data) {
+                    var modal = $('#modalMsg');
+                    modal.removeClass("alert-success");
+                    modal.removeClass("alert-danger");
+                    if (data.success == true) {
+                        modal.text("El material se agrego correctamente");
+                        modal.addClass("alert-success");
+                    } else {
+                        modal.text("Ocurrio un error al agregar el material");
+                        modal.addClass("alert-danger");
+                    }
+
+                    modal.fadeIn(1000);
+
+                    setTimeout(function () {
+                        modal.fadeOut(1000);
+                    }, 2500);
+                });
+            });
+        });
+    </script>
+}
+

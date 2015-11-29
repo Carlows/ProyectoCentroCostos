@@ -1,0 +1,27 @@
+﻿
+<div class="span12">
+    <div class="widget">
+        <div class="widget-header">
+            <i class="icon-bookmark"></i>
+            <h3>Eliminar Material</h3>
+        </div>
+        <!-- /widget-header -->
+        <div class="widget-content">
+            @using (Html.BeginForm("EliminarCostoMaterialPost", "LineaProduccion", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.Partial("_ValidationSummary")
+
+                <fieldset>
+                    <h3>¿Seguro que deseas eliminar este material?</h3>
+
+                    <input type="hidden" name="idMaterial" value="@ViewBag.idCosto" />
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                        <a href="@Url.Action("Index", "LineaProduccion")" class="btn">Cancelar</a>
+                    </div>
+                </fieldset>
+            }
+        </div>
+        <!-- /widget-content -->
+    </div>
+</div>

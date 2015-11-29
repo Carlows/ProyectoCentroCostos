@@ -20,16 +20,14 @@
                     <thead>
                         <tr>
                             <th> Departamento </th>
-                            <th> # Costos Asignados </th>
                             <th class="td-actions"> </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Departamento departamento in Model.Departamentos)
+                        @foreach (DepartamentoProduccion departamento in Model.Departamentos)
                         {
                             <tr>
-                                <td class="span4">@departamento.Nombre_Departamento</td>
-                                <td class="span2"> @departamento.Costos_Departamento.Count </td>
+                                <td class="span6">@departamento.Nombre_Departamento</td>
                                 <td class="td-actions span2">
                                     <a href="@Url.Action("EditarDepartamento", "Administracion", new { id = @departamento.Id })" class="btn btn-small btn-primary"><i class="btn-icon-only icon-search"> </i></a>
                                     <a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a>

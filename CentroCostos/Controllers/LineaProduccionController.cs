@@ -1,9 +1,12 @@
 ﻿using CentroCostos.Infrastructure;
 using CentroCostos.Infrastructure.Repositorios;
+using CentroCostos.Models;
 using CentroCostos.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,13 +20,18 @@ namespace CentroCostos.Controllers
         private readonly ILineaRepository _lineasDb;
         private readonly IModeloRepository _modelosDb;
         private readonly IMaterialRepository _materialesDb;
+        private readonly IMaterialesDepartamentoRepository _materialesDepartamentoDb;
+        private readonly ICostoMaterialRepository _costoMaterialDb;
 
-        public LineaProduccionController(IUnitOfWork uow, ILineaRepository lineasRepository, IModeloRepository modelosRepository, IMaterialRepository materialesRepository)
+        public LineaProduccionController(IUnitOfWork uow, ILineaRepository lineasRepository, IModeloRepository modelosRepository, IMaterialRepository materialesRepository,
+                                         IMaterialesDepartamentoRepository materialesDepartamentoRepo, ICostoMaterialRepository costoMaterialRepo)
         {
             _uow = uow;
             _lineasDb = lineasRepository;
             _modelosDb = modelosRepository;
             _materialesDb = materialesRepository;
+            _materialesDepartamentoDb = materialesDepartamentoRepo;
+            _costoMaterialDb = costoMaterialRepo;
         }
 
         // GET: LineaProduccion
@@ -76,6 +84,8 @@ namespace CentroCostos.Controllers
                 var departamentoMateriales = modelo.Ficha.MaterialesDepartamento.Where(d => d.Id == departamentoId).Single().Materiales;
                 var materiales = _materialesDb.FindAll();
 
+                ViewBag.departamentoMaterialId = departamentoId;
+
                 var model = new AgregarMaterialesViewModel()
                 {
                     materialesAgregados = departamentoMateriales,
@@ -90,6 +100,65 @@ namespace CentroCostos.Controllers
 
                 TempData["message"] = "Hubo un error al encontrar la información";
                 return View("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AgregarMaterialDepartamentoAJAX(AgregarMaterialDepartamentoViewModel model)
+        {
+            try
+            {
+                var departamentoMaterial = _materialesDepartamentoDb.GetById(model.departamentoId);
+                var material = _materialesDb.Find(model.codigoMaterial);
+
+                CostoMaterial costo = new CostoMaterial()
+                {
+                    Consumo_Par = model.consumoMaterial,                    
+                    Material = material
+                };
+
+                departamentoMaterial.Materiales.Add(costo);
+
+                // A problem with lazy loading, if you didn't refer to this property before, then it will not ever initialize
+                departamentoMaterial.Departamento = departamentoMaterial.Departamento;
+
+                _materialesDepartamentoDb.Update(departamentoMaterial);
+                _uow.SaveChanges();
+
+                return Json(new { success = true, message = "El material se agrego correctamente" });
+            }
+            catch(Exception e)
+            {
+                return Json(new { success = false, message = "Se produjo un error en el servidor" });
+            }
+        }
+
+        public ActionResult EliminarCostoMaterial(int id)
+        {
+            ViewBag.idCosto = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EliminarCostoMaterialPost(int idMaterial)
+        {
+            ViewBag.idCosto = idMaterial;            
+            try
+            {
+                var material = _costoMaterialDb.GetById(idMaterial);
+
+                _costoMaterialDb.Delete(material);
+                _uow.SaveChanges();
+
+                return RedirectToAction("Index");
+            }            
+            catch(Exception e)
+            {
+                // log here
+
+                ModelState.AddModelError("", "No se pudo eliminar el material");
+                return View();
             }
         }
     }
