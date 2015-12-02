@@ -20,6 +20,8 @@ namespace CentroCostos.Models
 
         [Required]
         public virtual DepartamentoProduccion Departamento { get; set; }
+        [Required]
+        public virtual FichaTecnica Ficha { get; set; }
         public virtual IList<CostoMaterial> Materiales { get; set; }
     }
 }

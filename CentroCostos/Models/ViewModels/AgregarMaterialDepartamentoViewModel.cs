@@ -10,6 +10,6 @@ namespace CentroCostos.Models.ViewModels
     {
         public int departamentoId { get; set; }
         public string codigoMaterial { get; set; }
-        public int consumoMaterial { get; set; }
+        public decimal consumoMaterial { get; set; }
     }
 }

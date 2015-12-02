@@ -26,13 +26,14 @@ namespace CentroCostos.Controllers
         private readonly ICostoRepository _costosDb;
         private readonly IDepartamentoRepository _departamentosDb;
         private readonly ICentroCostoRepository _centrosDb;
+        private readonly IFichaTecnicaRepository _fichasDb;
         private readonly IExcelData _manager;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public AdministracionController(IUnitOfWork uow, ILineaRepository lineasRepository,
             IModeloRepository modelosRepository, IMaterialRepository materialRepository, ICategoriaRepository categoriaRepository,
             ICostoRepository costosRepository, IDepartamentoRepository departamentosRepository, ICentroCostoRepository centrosRepository,
-            IExcelData manager)
+            IExcelData manager, IFichaTecnicaRepository fichasRepo)
         {
             _uow = uow;
             _lineasDb = lineasRepository;
@@ -42,6 +43,7 @@ namespace CentroCostos.Controllers
             _costosDb = costosRepository;
             _departamentosDb = departamentosRepository;
             _centrosDb = centrosRepository;
+            _fichasDb = fichasRepo;
             _manager = manager;
         }
 
@@ -259,6 +261,7 @@ namespace CentroCostos.Controllers
                     curModel.Tipo_Suela = model.Tipo_Suela;
                     curModel.Linea = linea;
                     curModel.Fecha_Ultima_Modificacion = DateTime.Now;
+                    curModel.Ficha = curModel.Ficha;
 
                     curModel.URL_Imagen = CheckAndUploadImage(model) ?? curModel.URL_Imagen;
 
@@ -771,12 +774,8 @@ namespace CentroCostos.Controllers
             {
                 try
                 {
-                    var departamento = new DepartamentoProduccion
-                    {
-                        Nombre_Departamento = model.Nombre_Departamento
-                    };
-
-                    _departamentosDb.Create(departamento);
+                    var departamento = _departamentosDb.CreateDepartamento(model);
+                    _fichasDb.UpdateFichasWithDepartamento(departamento);
                     _uow.SaveChanges();
 
                     TempData["message"] = "El registro fue creado correctamente";

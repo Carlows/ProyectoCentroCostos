@@ -111,7 +111,8 @@ namespace CentroCostos.Infrastructure.Repositorios
                         },
                         Pieza = int.Parse(row["Pieza"].ToString()),
                         Color = row["Color"].ToString(),
-                        Linea = linea
+                        Linea = linea,
+                        Ficha = CrearFichaTecnicaVacia()
                     });
                 }
 

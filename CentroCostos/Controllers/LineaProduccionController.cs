@@ -20,11 +20,12 @@ namespace CentroCostos.Controllers
         private readonly ILineaRepository _lineasDb;
         private readonly IModeloRepository _modelosDb;
         private readonly IMaterialRepository _materialesDb;
+        private readonly IFichaTecnicaRepository _fichasDb;
         private readonly IMaterialesDepartamentoRepository _materialesDepartamentoDb;
         private readonly ICostoMaterialRepository _costoMaterialDb;
 
         public LineaProduccionController(IUnitOfWork uow, ILineaRepository lineasRepository, IModeloRepository modelosRepository, IMaterialRepository materialesRepository,
-                                         IMaterialesDepartamentoRepository materialesDepartamentoRepo, ICostoMaterialRepository costoMaterialRepo)
+                                         IMaterialesDepartamentoRepository materialesDepartamentoRepo, IFichaTecnicaRepository fichasRepo, ICostoMaterialRepository costoMaterialRepo)
         {
             _uow = uow;
             _lineasDb = lineasRepository;
@@ -32,6 +33,7 @@ namespace CentroCostos.Controllers
             _materialesDb = materialesRepository;
             _materialesDepartamentoDb = materialesDepartamentoRepo;
             _costoMaterialDb = costoMaterialRepo;
+            _fichasDb = fichasRepo;
         }
 
         // GET: LineaProduccion
@@ -50,7 +52,11 @@ namespace CentroCostos.Controllers
             else if (isModelSelected(model))
             {
                 newModel.ModelosLinea = ObtenerModelos(model);
-                newModel.Modelo = _modelosDb.GetById((int)model.ModeloID);
+
+                var modelo = _modelosDb.GetById((int)model.ModeloID);
+                newModel.Modelo = modelo;
+                newModel.TotalCostoDirecto = _fichasDb.CalculateTotalMaterialCost(modelo.Ficha, costoDirecto: true);
+                newModel.TotalCostoIndirecto = _fichasDb.CalculateTotalMaterialCost(modelo.Ficha, costoDirecto: false);
             }
 
             return View(newModel);
@@ -121,6 +127,7 @@ namespace CentroCostos.Controllers
 
                 // A problem with lazy loading, if you didn't refer to this property before, then it will not ever initialize
                 departamentoMaterial.Departamento = departamentoMaterial.Departamento;
+                departamentoMaterial.Ficha = departamentoMaterial.Ficha;
 
                 _materialesDepartamentoDb.Update(departamentoMaterial);
                 _uow.SaveChanges();

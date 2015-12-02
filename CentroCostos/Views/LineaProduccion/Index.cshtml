@@ -77,11 +77,11 @@
     </div>
 </div>
 
-<div class="row-fluid">
-    <div class="span8">
-        @if (Model.Modelo != null)
-        {
-            foreach (MaterialesDepartamentoProduccion departamento in Model.Modelo.Ficha.MaterialesDepartamento)
+@if (Model.Modelo != null)
+{
+    <div class="row-fluid">
+        <div class="span8">
+            @foreach (MaterialesDepartamentoProduccion departamento in Model.Modelo.Ficha.MaterialesDepartamento)
             {
                 <div class="widget">
                     <div class="widget-header">
@@ -101,17 +101,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach(CostoMaterial m in departamento.Materiales)
+                                @foreach (CostoMaterial m in departamento.Materiales)
                                 {
-                                <tr>
-                                    <td>@m.Material.Codigo</td>
-                                    <td>@m.Material.Descripcion_Material</td>
-                                    <td>@m.Material.Unidad_Medida</td>
-                                    <td>@m.Consumo_Par</td>
-                                    <td>@m.Material.Costo_Unitario</td>
-                                    <td>@m.Costo_Total</td>
-                                    <td><a class="btn btn-danger" href="@Url.Action("EliminarCostoMaterial", "LineaProduccion", new { id = m.Id })">Eliminar</a></td>
-                                </tr>
+                                    <tr>
+                                        <td>@m.Material.Codigo</td>
+                                        <td>@m.Material.Descripcion_Material</td>
+                                        <td>@m.Material.Unidad_Medida</td>
+                                        <td>@m.Consumo_Par</td>
+                                        <td>@m.Material.Costo_Unitario</td>
+                                        <td>@m.Costo_Total</td>
+                                        <td><a class="btn btn-danger" href="@Url.Action("EliminarCostoMaterial", "LineaProduccion", new { id = m.Id })">Eliminar</a></td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -120,6 +120,21 @@
                     </div>
                 </div>
             }
-        }
+        </div>
     </div>
-</div>
+
+    <div class="row-fluid">
+        <div class="span8">
+            <div class="widget">
+                <div class="widget-header">
+                    <h3>Total materia prima directa: @Model.TotalCostoDirecto.ToString("F")</h3>
+                </div>
+            </div>
+            <div class="widget">
+                <div class="widget-header">
+                    <h3>Total materia prima indirecta: @Model.TotalCostoIndirecto.ToString("F")</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+}

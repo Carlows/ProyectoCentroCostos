@@ -12,6 +12,8 @@ namespace CentroCostos.Models.ViewModels
 
         public int? LineaID { get; set; }
         public int? ModeloID { get; set; }
+        public decimal TotalCostoDirecto { get; set; }
+        public decimal TotalCostoIndirecto { get; set; }
 
         public IList<SelectListItem> Lineas { get; set; }
         public IList<SelectListItem> ModelosLinea { get; set; }

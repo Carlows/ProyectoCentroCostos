@@ -230,11 +230,13 @@
     <Compile Include="Infrastructure\Repositorios\CostoMaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\CostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\DepartamentoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\FichaTecnicaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICategoriaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICentroCostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICostoMaterialRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ICostoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IDepartamentoRepository.cs" />
+    <Compile Include="Infrastructure\Repositorios\IFichaTecnicaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\ILineaRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IMaterialesDepartamentoRepository.cs" />
     <Compile Include="Infrastructure\Repositorios\IMaterialRepository.cs" />
@@ -274,6 +276,10 @@
     <Compile Include="Migrations\201511282307541_changes.cs" />
     <Compile Include="Migrations\201511282307541_changes.Designer.cs">
       <DependentUpon>201511282307541_changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512012355561_MatDepartamentoProduccionRequiresFicha.cs" />
+    <Compile Include="Migrations\201512012355561_MatDepartamentoProduccionRequiresFicha.Designer.cs">
+      <DependentUpon>201512012355561_MatDepartamentoProduccionRequiresFicha.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoriaMaterial.cs" />
@@ -396,6 +402,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511282307541_changes.resx">
       <DependentUpon>201511282307541_changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512012355561_MatDepartamentoProduccionRequiresFicha.resx">
+      <DependentUpon>201512012355561_MatDepartamentoProduccionRequiresFicha.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

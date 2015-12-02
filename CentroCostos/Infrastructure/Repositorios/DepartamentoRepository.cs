@@ -1,4 +1,5 @@
 ﻿using CentroCostos.Models;
+using CentroCostos.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,19 @@ namespace CentroCostos.Infrastructure.Repositorios
         public DepartamentoProduccion Find(string nombre)
         {
             return DbContext.Departamentos.Where(d => d.Nombre_Departamento.StartsWith(nombre)).Single();
+        }
+
+
+        public DepartamentoProduccion CreateDepartamento(DepartamentoViewModel model)
+        {
+            var departamento = new DepartamentoProduccion
+            {
+                Nombre_Departamento = model.Nombre_Departamento
+            };
+
+            this.Create(departamento);
+
+            return departamento;
         }
     }
 }
